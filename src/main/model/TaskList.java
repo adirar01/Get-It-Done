@@ -1,7 +1,5 @@
 package model;
 
-import sun.lwawt.macosx.CPrinterDevice;
-
 import java.util.ArrayList;
 
 // Represents a task list with pending tasks to complete
