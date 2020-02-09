@@ -15,6 +15,5 @@ see the application have a positive impact in the lives of all its users.
 Productivity Manager Features:
 - Login + User Accounts for Users :computer:
 - To-do list :memo:
-             :pencil:
 - Pomodoro Timer :hourglass_flowing_sand:
 - Achievement System :trophy:
