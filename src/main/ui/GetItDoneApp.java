@@ -75,12 +75,14 @@ public class GetItDoneApp {
 
     // EFFECTS: displays menu of options to user
     public void displayMenu() {
-        System.out.println("\n\n\n\n\t\tWelcome to your Get It Done account, " + defaultUser.getUsername() + "!");
-        System.out.println("\n\n\t Please choose one of the following:");
+        System.out.println("\n\n\n\n*************************************************************************");
+        System.out.println("\n\t\t\tWelcome to your Get It Done account, " + defaultUser.getUsername() + "!");
+        System.out.println("\n\n\t\tPlease choose one of the following:");
         System.out.println("\n\t 1. Add a Task");
         System.out.println("\n\t 2. View Task List");
         System.out.println("\n\t 3. Delete a Task");
         System.out.println("\n\t 4. Log out and quit");
+        System.out.println("\n*************************************************************************");
     }
 
     // MODIFIES: this
@@ -133,7 +135,7 @@ public class GetItDoneApp {
     // MODIFIES: this
     // EFFECTS: initializes a user, user input, and a new task list
     public void initialize() {
-        defaultUser = new User("gandalf", "thegrey");
+        defaultUser = new User("Gandalf", "Treebeard");
         input = new Scanner(System.in);
         taskList = new TaskList();
     }
