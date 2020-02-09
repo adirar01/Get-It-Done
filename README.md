@@ -14,6 +14,14 @@ see the application have a positive impact in the lives of all its users.
 
 Productivity Manager Features:
 - Login + User Accounts for Users :computer:
-- To-do list :memo:
+- Task tracker :memo:
 - Pomodoro Timer :hourglass_flowing_sand:
 - Achievement System :trophy:
+
+## User Stories
+
+- As a user, I want to be able to add tasks to the task tracker
+- As a user, I want to see the tasks added to the task tracker
+- As a user, I want to be able to delete completed tasks from the task tracker
+- As a user, I want to be able to login to the application
+
