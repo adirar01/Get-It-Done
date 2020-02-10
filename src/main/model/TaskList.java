@@ -16,8 +16,8 @@ public class TaskList {
 
     /*
      * MODIFIES: this
-     * EFFECTS: if task list has space, add task to task list, otherwise signal failure
-     *  and does not add the latest task
+     * EFFECTS: if task list has space, add task to task list, otherwise signals failure
+     * and does not add the latest task
      * */
     public String addTask(Task task) {
         if (numTasks() < MAX_NUM_TASKS) {
@@ -29,9 +29,9 @@ public class TaskList {
     }
 
     /*
-     * REQUIRES: task list is not empty, i >= 1
+     * REQUIRES: task list is not empty, and i >= 1
      * MODIFIES: this
-     * EFFECTS: deletes a task from the task list at a given number/ position
+     * EFFECTS: deletes a task from the task list at a given number/ position in printTaskList()
      * */
     public void deleteTask(int i) {
         taskList.remove(i - 1);
@@ -47,7 +47,7 @@ public class TaskList {
         } else {
             printedTaskList.append("\t\tTask List:\n\n");
             for (int i = 0; i < numTasks(); i++) {
-                printedTaskList.append("\n" + (i + 1) + ". " + taskList.get(i).printTask());
+                printedTaskList.append("\n").append(i + 1).append(". ").append(taskList.get(i).printTask());
             }
         }
         return String.valueOf(printedTaskList);
@@ -59,5 +59,14 @@ public class TaskList {
     public int numTasks() {
         return taskList.size();
     }
+
+    /*
+     * REQUIRES: a task must exist at the given index
+     * EFFECTS: returns selected task
+     * */
+    public Task produceTask(int i) { // question: specification needed?
+        return taskList.get(i - 1);
+    }
+
 }
 

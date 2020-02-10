@@ -94,22 +94,40 @@ public class TaskListTest {
     }
 
     @Test
-    public void printTaskListEmpty() {
+    public void testPrintTaskListEmpty() {
         assertEquals("Yay! Your task list is empty!\n\nUse the 'Add Task' option to add a new task.", testTaskList.printTaskList());
     }
 
     @Test
-    public void printTaskListSingle() {
+    public void testPrintTaskListSingle() {
         testTaskList.addTask(task1);
         assertEquals("\t\tTask List:\n\n" + "\n1. " + task1.printTask(), testTaskList.printTaskList());
     }
 
     @Test
-    public void printTaskListMultiple() {
+    public void testPrintTaskListMultiple() {
         testTaskList.addTask(task1);
         testTaskList.addTask(task2);
         testTaskList.addTask(task3);
         assertEquals("\t\tTask List:\n\n" + "\n1. " + task1.printTask() + "\n2. " + task2.printTask() + "\n3. " + task3.printTask(), testTaskList.printTaskList());
+    }
+
+    @Test
+    public void testGetTaskSingle() {
+        testTaskList.addTask(task1);
+
+        assertEquals(task1, testTaskList.produceTask(1));
+    }
+
+    @Test
+    public void testGetTaskMultiple() {
+        testTaskList.addTask(task1);
+        testTaskList.addTask(task2);
+        testTaskList.addTask(task3);
+
+        assertEquals(task3, testTaskList.produceTask(3));
+        assertEquals(task2, testTaskList.produceTask(2));
+        assertEquals(task1, testTaskList.produceTask(1));
     }
 }
 

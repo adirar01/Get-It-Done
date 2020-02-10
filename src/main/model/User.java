@@ -6,6 +6,10 @@ public class User {
     private String username;
     private String password;
 
+    /*
+     * REQUIRES: both username and password have non-zero length
+     * EFFECTS: creates a new empty task list
+     * */
     public User(String username, String password) {
         this.username = username;
         this.password = password;

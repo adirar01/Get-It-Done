@@ -36,19 +36,20 @@ public class GetItDoneApp {
             runHome();
             if (!appStatus) {
                 break;
+            }
+
+            displayMenu();
+            command = input.next();
+            input.nextLine(); // added to prevent line skipping for doAddTask
+            if (command.equals("5")) {
+                appStatus = false;
+                System.out.println("\nThank you for using Get It Done! Have a nice day!");
             } else {
-                displayMenu();
-                command = input.next();
-                input.nextLine(); // added to prevent line skipping for doAddTask
-                if (command.equals("4")) {
-                    appStatus = false;
-                    System.out.println("\nThank you for using Get It Done! Have a nice day!");
-                } else {
-                    processCommand(command);
-                }
+                processCommand(command);
             }
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: processes user input for home page
@@ -81,7 +82,8 @@ public class GetItDoneApp {
         System.out.println("\n\t 1. Add a Task");
         System.out.println("\n\t 2. View Task List");
         System.out.println("\n\t 3. Delete a Task");
-        System.out.println("\n\t 4. Log out and quit");
+        System.out.println("\n\t 4. Edit a Task");
+        System.out.println("\n\t 5. Log out and quit");
         System.out.println("\n*************************************************************************");
     }
 
@@ -94,20 +96,22 @@ public class GetItDoneApp {
             doViewTasks();
         } else if (command.equals("3")) {
             doDeleteTask();
+        } else if (command.equals("4")) {
+            doEditTask();
         } else {
-            System.out.println("Please enter a valid command uwu.");
+            System.out.println("Please enter a valid command.");
         }
     }
 
     // MODIFIES: this
     // EFFECTS: allows a user to add a task to their task list
     public void doAddTask() {
-        System.out.println("\n Please enter task description:");
+        System.out.println("\nPlease enter task description:");
         String taskName = input.nextLine();
-        System.out.println("\n Please enter task due date (MM/DD/YY):");
+        System.out.println("\nPlease enter task due date (MM/DD/YY):");
         String dueDate = input.next();
-        Task newTask = new Task(taskName, dueDate); // its always called new Task?
-        System.out.println(taskList.addTask(newTask));
+        Task newTask = new Task(taskName, dueDate); // whenever a new task object is created, same name?
+        System.out.println("\n" + taskList.addTask(newTask));
     }
 
     // MODIFIES: this
@@ -123,12 +127,39 @@ public class GetItDoneApp {
             System.out.println("No tasks to delete! Please add a task to use this feature.");
         } else {
             System.out.println(taskList.printTaskList());
-            System.out.println("Please select the number of the task you would like to delete:");
+            System.out.println("\nPlease select the number of the task you would like to delete:");
 
             int index = input.nextInt();
             taskList.deleteTask(index);
-            System.out.println("Your updated Task List is printed below:");
+            System.out.println("\nYour updated Task List is printed below:");
+            System.out.println("\n" + taskList.printTaskList());
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: allows a user to edit a task in their task list
+    public void doEditTask() {
+        if (taskList.numTasks() == 0) {
+            System.out.println("No tasks to edit! Please add a task to use this feature.");
+        } else {
             System.out.println(taskList.printTaskList());
+            System.out.println("\n\nPlease select the number of the task you would like to edit:");
+
+            int index = input.nextInt();
+            taskList.produceTask(index);
+
+            System.out.println("What would you like to rename this task?");
+            input.nextLine(); // is there a way around this to stop it from skipping?
+            String renamedTask = input.nextLine();
+
+            System.out.println("What is this task's new due date?");
+            String rescheduledDueDate = input.nextLine();
+
+            taskList.produceTask(index).setTaskName(renamedTask);
+            taskList.produceTask(index).setDueDate(rescheduledDueDate);
+
+            System.out.println("\n\nThis task has been changed to:");
+            System.out.println("\n" + taskList.produceTask(index).printTask());
         }
     }
 
@@ -153,14 +184,14 @@ public class GetItDoneApp {
     // MODIFIES: this
     // EFFECTS: processes user login information
     public boolean login() {
-        System.out.println("Please enter your username:\n");
+        System.out.println("\nPlease enter your username:");
         String inputtedUserName = input.nextLine();
-        System.out.println("Please enter your password:\n");
+        System.out.println("\nPlease enter your password:");
         String inputtedPassword = input.nextLine();
         if (checkCredentials(inputtedUserName, inputtedPassword)) {
             return true;
         } else {
-            System.out.println("Your username or password is incorrect, please try again.");
+            System.out.println("\nYour username or password is incorrect, please try again.");
             return false;
         }
     }

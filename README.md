@@ -20,7 +20,7 @@ Productivity Manager Features:
 
 ## User Stories
 
-- As a user, I want to be able to add tasks to the task tracker
+- As a user, I want to be able to add tasks to the task tracker (and be able to edit them after adding them)
 - As a user, I want to see the tasks added to the task tracker
 - As a user, I want to be able to delete completed tasks from the task tracker
 - As a user, I want to be able to login to the application from the menu
