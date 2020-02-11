@@ -108,8 +108,10 @@ public class GetItDoneApp {
     public void doAddTask() {
         System.out.println("\nPlease enter task description:");
         String taskName = input.nextLine();
+
         System.out.println("\nPlease enter task due date (MM/DD/YY):");
-        String dueDate = input.next();
+        String dueDate = input.nextLine();
+
         Task newTask = new Task(taskName, dueDate); // whenever a new task object is created, same name?
         System.out.println("\n" + taskList.addTask(newTask));
     }

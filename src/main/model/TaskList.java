@@ -45,7 +45,7 @@ public class TaskList {
         if (numTasks() == 0) {
             return "Yay! Your task list is empty!\n\nUse the 'Add Task' option to add a new task.";
         } else {
-            printedTaskList.append("\t\tTask List:\n\n");
+            printedTaskList.append("\t\t\tTask List:\n\n");
             for (int i = 0; i < numTasks(); i++) {
                 printedTaskList.append("\n").append(i + 1).append(". ").append(taskList.get(i).printTask());
             }

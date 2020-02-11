@@ -101,7 +101,7 @@ public class TaskListTest {
     @Test
     public void testPrintTaskListSingle() {
         testTaskList.addTask(task1);
-        assertEquals("\t\tTask List:\n\n" + "\n1. " + task1.printTask(), testTaskList.printTaskList());
+        assertEquals("\t\t\tTask List:\n\n" + "\n1. " + task1.printTask(), testTaskList.printTaskList());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class TaskListTest {
         testTaskList.addTask(task1);
         testTaskList.addTask(task2);
         testTaskList.addTask(task3);
-        assertEquals("\t\tTask List:\n\n" + "\n1. " + task1.printTask() + "\n2. " + task2.printTask() + "\n3. " + task3.printTask(), testTaskList.printTaskList());
+        assertEquals("\t\t\tTask List:\n\n" + "\n1. " + task1.printTask() + "\n2. " + task2.printTask() + "\n3. " + task3.printTask(), testTaskList.printTaskList());
     }
 
     @Test
