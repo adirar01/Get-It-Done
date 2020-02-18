@@ -1,7 +1,12 @@
 package model;
 
+import persistence.Reader;
+import persistence.Saveable;
+
+import java.io.PrintWriter;
+
 // Represents a task with a description and due date
-public class Task {
+public class Task implements Saveable {
     private String taskName;
     private String dueDate;
 
@@ -35,5 +40,13 @@ public class Task {
      * */
     public String printTask() {
         return "Task: " + this.taskName + "\t\t" + "Due: " + this.dueDate;
+    }
+
+
+    @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(taskName);
+        printWriter.print(Reader.DELIMITER);
+        printWriter.println(dueDate);
     }
 }
