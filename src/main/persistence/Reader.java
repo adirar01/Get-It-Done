@@ -16,6 +16,11 @@ public class Reader {
 
     public static final String DELIMITER = ",";
 
+    public Reader() { // dummy constructor
+        Reader reader = new Reader();
+    }
+
+
     // EFFECTS: returns the task list parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
     public static TaskList readTaskList(File file) throws IOException {

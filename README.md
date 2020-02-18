@@ -25,5 +25,5 @@ Productivity Manager Features:
 - As a user, I want to be able to delete completed tasks from the task tracker
 - As a user, I want to be able to login to the application from the menu
 - As a user, I want to be able to save my task tracker to file
-- As a user, I want to be able to load my task tracker from file
+- As a user, I want to be able to see old tasks previously I added when I relaunch the application.
 
