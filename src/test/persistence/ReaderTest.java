@@ -7,8 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for Reader class
 public class ReaderTest {
@@ -57,7 +56,7 @@ public class ReaderTest {
     @Test
     void testIOException() {
         try {
-            Reader.readTaskList(new File("./path/does/not/exist/testAccount.txt"));
+            Reader.readTaskList(new File(TEST_FILE_INVALID));
             fail("Not expecting to reach here");
         } catch (IOException e) {
             // expected
