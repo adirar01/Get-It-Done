@@ -57,7 +57,7 @@ public class Reader {
         return new ArrayList<>(Arrays.asList(splits));
     }
 
-    private static Reader getReader() { // workaround code coverage
+    public static Reader getReader() { // workaround code coverage
         return reader;
     }
 

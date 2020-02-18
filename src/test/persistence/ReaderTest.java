@@ -5,15 +5,20 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static persistence.Reader.getReader;
 
 // Tests for Reader class
 public class ReaderTest {
     private static final String TEST_FILE_1 = "./data/testTaskTracker1.txt";
     private static final String TEST_FILE_2 = "./data/testTaskTracker2.txt";
     private static final String TEST_FILE_INVALID = "./data/middleEarthSecretMissions.txt";
+
+    @Test
+    public void testGetReader() {
+        assertNotNull(getReader());
+    }
 
     @Test
     public void testParseAccountsFile1() {
