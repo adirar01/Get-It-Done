@@ -11,9 +11,9 @@ public class Task implements Saveable {
     private String dueDate;
 
     /*
-    * REQUIRES: taskName and dueDate is not null, dueDate entered in form MM/DD/YY
-    * EFFECTS: creates a new task with description of taskName and due date of dueDate
-    * */
+     * REQUIRES: taskName and dueDate is not null, dueDate entered in form MM/DD/YY
+     * EFFECTS: creates a new task with description of taskName and due date of dueDate
+     * */
     public Task(String taskName, String dueDate) {
         this.taskName = taskName;
         this.dueDate = dueDate;

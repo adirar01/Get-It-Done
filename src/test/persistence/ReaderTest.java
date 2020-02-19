@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static persistence.Reader.getReader;
 
 // Tests for Reader class
 public class ReaderTest {
@@ -16,8 +15,9 @@ public class ReaderTest {
     private static final String TEST_FILE_INVALID = "./data/middleEarthSecretMissions.txt";
 
     @Test
-    public void testGetReader() {
-        assertNotNull(getReader());
+    public void testConstructor() {
+        Reader reader = new Reader();
+        assertNotNull(reader);
     }
 
     @Test

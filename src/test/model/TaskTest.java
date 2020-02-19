@@ -1,4 +1,5 @@
 package model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +36,6 @@ public class TaskTest {
     public void testPrintTask() {
         assertEquals("Task: CS210 Homework\t\tDue: 02/20/20", testTask.printTask());
     }
-
-
 
 
 }

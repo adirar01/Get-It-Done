@@ -48,7 +48,7 @@ public class WriterTest {
 
         assertEquals(3, currentTaskList.size());
 
-        for (Task task: currentTaskList) {
+        for (Task task : currentTaskList) {
             testWriter.write(task); // write each task to file on a new line?
         }
 

@@ -16,7 +16,10 @@ public class Reader {
 
     public static final String DELIMITER = ",";
 
-    private static Reader reader = new Reader(); // workaround code coverage
+    //EFFECTS: has no special behavior once a reader object is created
+    //because reader objects are not necessary
+    public Reader() {
+    }
 
     // EFFECTS: returns the task list parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
@@ -56,10 +59,5 @@ public class Reader {
         String[] splits = line.split(DELIMITER);
         return new ArrayList<>(Arrays.asList(splits));
     }
-
-    public static Reader getReader() { // workaround code coverage
-        return reader;
-    }
-
 
 }

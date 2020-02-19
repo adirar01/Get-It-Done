@@ -193,7 +193,7 @@ public class GetItDoneApp {
                     currentTaskList.add(taskList.produceTask(count + 1));
                 }
 
-                for (Task task: currentTaskList) {
+                for (Task task : currentTaskList) {
                     writer.write(task); // writes each task to file on a new line
                 }
 

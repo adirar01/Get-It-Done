@@ -44,7 +44,7 @@ public class TaskListTest {
     @Test
     public void testAddTaskUpperBound() {
         assertEquals(0, testTaskList.numTasks());
-        for(int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
+        for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
             testTaskList.addTask(task1);
         }
         assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
@@ -52,7 +52,7 @@ public class TaskListTest {
 
     @Test
     public void testAddTaskBeyondMaximum() {
-        for(int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
+        for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
             testTaskList.addTask(task1);
         }
         assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
