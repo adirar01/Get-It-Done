@@ -16,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for Writer class
 public class WriterTest {
+
+    /*
+     * WriterTest adapted from Teller Sample
+     * */
+
     private static final String TEST_FILE = "./data/testWrite.txt";
     private Writer testWriter;
     private TaskList testTaskList;

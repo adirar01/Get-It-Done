@@ -10,6 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for Reader class
 public class ReaderTest {
+
+    /*
+    * ReaderTest adapted from Teller Sample
+    * */
+
     private static final String TEST_FILE_1 = "./data/testTaskTracker1.txt";
     private static final String TEST_FILE_2 = "./data/testTaskTracker2.txt";
     private static final String TEST_FILE_INVALID = "./data/middleEarthSecretMissions.txt";
