@@ -204,7 +204,7 @@ public class GetItDoneApp {
                 System.out.println("Unable to save accounts to " + TASK_TRACKER_FILE);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                // this is due to programming error thing
+                // this is due to a programming error thing
             }
         }
     }
