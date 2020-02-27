@@ -179,7 +179,7 @@ public class GetItDoneApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: allows a user to delete a task from their task tracker
+    // EFFECTS: allows a user to save their task list
     public void doSaveTask() {
         if (taskList.numTasks() == 0) {
             System.out.println("No tasks to save! Please add a task to use this feature.");
@@ -204,7 +204,7 @@ public class GetItDoneApp {
                 System.out.println("Unable to save accounts to " + TASK_TRACKER_FILE);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                // this is due to a programming error
+                // this is due to programming error thing
             }
         }
     }

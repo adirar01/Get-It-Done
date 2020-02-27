@@ -42,7 +42,8 @@ public class Task implements Saveable {
         return "Task: " + this.taskName + "\t\t" + "Due: " + this.dueDate;
     }
 
-
+    //MODIFIES: printWriter
+    //EFFECTS: saves task name and task due date to file
     @Override
     public void save(PrintWriter printWriter) {
         printWriter.print(taskName);
