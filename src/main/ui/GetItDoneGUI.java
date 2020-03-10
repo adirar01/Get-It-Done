@@ -1,10 +1,13 @@
 package ui;
 
+import model.Task;
 import model.TaskList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // GUI of Get It Done app
 public class GetItDoneGUI extends JFrame {
@@ -13,34 +16,32 @@ public class GetItDoneGUI extends JFrame {
     * other provided class repositories
     * */
     private TaskList taskList;
-    private JList<String> tasks;
-    private static final String taskString = "Add Task";
-    private static final String dueDateString = "Add Task";
-    private static final String addTaskString = "Add Task";
-    private static final String deleteTaskString = "Delete Task";
-    private static final String editTaskString = "Edit Task";
-    private static final String saveTaskListString = "Save Task List";
-    private static final String loadTaskListString = "Load Task List";
-    private static final String titleText = "Get It Done!";
+    protected JList<String> tasks;
+    protected static final String addTaskString = "Add Task";
+    protected static final String deleteTaskString = "Delete Task";
+    protected static final String editTaskString = "Edit Task";
+    protected static final String saveTaskListString = "Save Task List";
+    protected static final String loadTaskListString = "Load Task List";
+    protected static final String titleText = "Get It Done!";
 
 
 
-    private JButton addTaskButton;
-    private JButton deleteTaskButton;
-    private JButton editTaskButton;
-    private JButton saveTaskListButton;
-    private JButton loadTaskListButton;
-    private JTextField taskName;
-    private JTextField dueDate;
+    protected JButton addTaskButton;
+    protected JButton deleteTaskButton;
+    protected JButton editTaskButton;
+    protected JButton saveTaskListButton;
+    protected JButton loadTaskListButton;
+    protected JTextField taskName;
+    protected JTextField dueDate;
 
-    private JLabel topTitle;
+    protected JLabel topTitle;
 
-    private JPanel title;
-    private JPanel taskSpecification;
-    private JPanel interactionButtons;
-    private JPanel taskListViewer;
+    protected JPanel title;
+    protected JPanel taskSpecification;
+    protected JPanel interactionButtons;
+    protected JPanel taskListViewer;
 
-    private JScrollPane taskListScrollPane;
+    protected JScrollPane taskListScrollPane;
 
 
     public GetItDoneGUI() {
@@ -133,4 +134,62 @@ public class GetItDoneGUI extends JFrame {
             }
         });
     }
+
+    public class AddTaskListener extends GetItDoneGUI implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // create a new task
+            String taskNameString = this.taskName.getText();
+            String dueDateString = this.dueDate.getText();
+            Task createdTask = new Task(taskNameString, dueDateString);
+
+            // add a task the task list
+            taskList.addTask(createdTask);
+
+            // task list to JList + refresh screen
+        }
+    }
+
+    public class DeleteTaskListener extends GetItDoneGUI implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // delete task from tasklist
+
+            // update JList with new task list + refresh screen
+        }
+    }
+
+    public class EditTaskListener extends GetItDoneGUI implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // edit task in tasklist
+
+            // update JList with new task list + refresh screen
+        }
+    }
+
+    public class SaveTaskListListener extends GetItDoneGUI implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // save tasklist to file
+
+            // dialog box about success or failure otherwise
+        }
+    }
+
+    public class LoadTaskListListener extends GetItDoneGUI implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // load tasklist into screen
+        }
+    }
+
+
+
 }
+
