@@ -116,7 +116,7 @@ public class TaskListTest {
     public void testGetTaskSingle() {
         testTaskList.addTask(task1);
 
-        assertEquals(task1, testTaskList.produceTask(1));
+        assertEquals(task1, testTaskList.getTask(1));
     }
 
     @Test
@@ -125,9 +125,9 @@ public class TaskListTest {
         testTaskList.addTask(task2);
         testTaskList.addTask(task3);
 
-        assertEquals(task3, testTaskList.produceTask(3));
-        assertEquals(task2, testTaskList.produceTask(2));
-        assertEquals(task1, testTaskList.produceTask(1));
+        assertEquals(task3, testTaskList.getTask(3));
+        assertEquals(task2, testTaskList.getTask(2));
+        assertEquals(task1, testTaskList.getTask(1));
     }
 }
 

@@ -47,7 +47,7 @@ public class WriterTest {
         ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from already formed task list.
 
         for (int count = 0; count < testTaskList.numTasks(); count++) {
-            currentTaskList.add(testTaskList.produceTask(count + 1));
+            currentTaskList.add(testTaskList.getTask(count + 1));
         }
 
         assertEquals(3, currentTaskList.size());
@@ -62,13 +62,13 @@ public class WriterTest {
             TaskList taskListReadFromFile = new TaskList();
             taskListReadFromFile = Reader.readTaskList(new File(TEST_FILE)); // read task list only has size 1?
 
-            assertEquals("save middle earth", taskListReadFromFile.produceTask(1).getTaskName());
-            assertEquals("visit bilbo at the shire", taskListReadFromFile.produceTask(2).getTaskName());
-            assertEquals("restock closet with white majestic gowns", taskListReadFromFile.produceTask(3).getTaskName());
+            assertEquals("save middle earth", taskListReadFromFile.getTask(1).getTaskName());
+            assertEquals("visit bilbo at the shire", taskListReadFromFile.getTask(2).getTaskName());
+            assertEquals("restock closet with white majestic gowns", taskListReadFromFile.getTask(3).getTaskName());
 
-            assertEquals("02/20/20", taskListReadFromFile.produceTask(1).getDueDate());
-            assertEquals("04/15/20", taskListReadFromFile.produceTask(2).getDueDate());
-            assertEquals("03/17/20", taskListReadFromFile.produceTask(3).getDueDate());
+            assertEquals("02/20/20", taskListReadFromFile.getTask(1).getDueDate());
+            assertEquals("04/15/20", taskListReadFromFile.getTask(2).getDueDate());
+            assertEquals("03/17/20", taskListReadFromFile.getTask(3).getDueDate());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");

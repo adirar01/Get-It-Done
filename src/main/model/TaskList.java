@@ -64,7 +64,7 @@ public class TaskList {
      * REQUIRES: a task must exist at the given index
      * EFFECTS: returns selected task
      * */
-    public Task produceTask(int i) { // question: specification needed?
+    public Task getTask(int i) { // question: specification needed?
         return taskList.get(i - 1);
     }
 

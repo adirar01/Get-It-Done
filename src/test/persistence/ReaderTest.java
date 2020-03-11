@@ -31,13 +31,13 @@ public class ReaderTest {
             TaskList taskListReadFromFile = new TaskList();
             taskListReadFromFile = Reader.readTaskList(new File(TEST_FILE_1));
 
-            assertEquals("save middle earth", taskListReadFromFile.produceTask(1).getTaskName());
-            assertEquals("visit bilbo at the shire", taskListReadFromFile.produceTask(2).getTaskName());
-            assertEquals("restock closet with white majestic gowns", taskListReadFromFile.produceTask(3).getTaskName());
+            assertEquals("save middle earth", taskListReadFromFile.getTask(1).getTaskName());
+            assertEquals("visit bilbo at the shire", taskListReadFromFile.getTask(2).getTaskName());
+            assertEquals("restock closet with white majestic gowns", taskListReadFromFile.getTask(3).getTaskName());
 
-            assertEquals("02/20/20", taskListReadFromFile.produceTask(1).getDueDate());
-            assertEquals("04/15/20", taskListReadFromFile.produceTask(2).getDueDate());
-            assertEquals("03/17/20", taskListReadFromFile.produceTask(3).getDueDate());
+            assertEquals("02/20/20", taskListReadFromFile.getTask(1).getDueDate());
+            assertEquals("04/15/20", taskListReadFromFile.getTask(2).getDueDate());
+            assertEquals("03/17/20", taskListReadFromFile.getTask(3).getDueDate());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
@@ -50,13 +50,13 @@ public class ReaderTest {
             TaskList taskListReadFromFile = new TaskList();
             taskListReadFromFile = Reader.readTaskList(new File(TEST_FILE_2));
 
-            assertEquals("CPSC 210 P2 due", taskListReadFromFile.produceTask(1).getTaskName());
-            assertEquals("Get a cookie from Blue Chip Cafe", taskListReadFromFile.produceTask(2).getTaskName());
-            assertEquals("Read a book at Tower Beach", taskListReadFromFile.produceTask(3).getTaskName());
+            assertEquals("CPSC 210 P2 due", taskListReadFromFile.getTask(1).getTaskName());
+            assertEquals("Get a cookie from Blue Chip Cafe", taskListReadFromFile.getTask(2).getTaskName());
+            assertEquals("Read a book at Tower Beach", taskListReadFromFile.getTask(3).getTaskName());
 
-            assertEquals("02/26/20", taskListReadFromFile.produceTask(1).getDueDate());
-            assertEquals("02/22/20", taskListReadFromFile.produceTask(2).getDueDate());
-            assertEquals("03/15/20", taskListReadFromFile.produceTask(3).getDueDate());
+            assertEquals("02/26/20", taskListReadFromFile.getTask(1).getDueDate());
+            assertEquals("02/22/20", taskListReadFromFile.getTask(2).getDueDate());
+            assertEquals("03/15/20", taskListReadFromFile.getTask(3).getDueDate());
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");

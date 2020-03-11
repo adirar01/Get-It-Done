@@ -11,11 +11,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 // Get It Done! application
-public class GetItDoneApp {
+public class ConsoleUI {
 
     //***
     // note: set up of Get It Done! application UI is adapted from Teller sample application.
@@ -29,7 +28,7 @@ public class GetItDoneApp {
     private static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
 
     // EFFECTS: runs the Get It Done application
-    public GetItDoneApp() {
+    public ConsoleUI() {
         runGetItDone();
     }
 
@@ -161,7 +160,7 @@ public class GetItDoneApp {
             System.out.println("\n\nPlease select the number of the task you would like to edit:");
 
             int index = input.nextInt();
-            taskList.produceTask(index);
+            taskList.getTask(index);
 
             System.out.println("What would you like to rename this task?");
             input.nextLine(); // is there a way around this to stop it from skipping?
@@ -170,11 +169,11 @@ public class GetItDoneApp {
             System.out.println("What is this task's new due date?");
             String rescheduledDueDate = input.nextLine();
 
-            taskList.produceTask(index).setTaskName(renamedTask);
-            taskList.produceTask(index).setDueDate(rescheduledDueDate);
+            taskList.getTask(index).setTaskName(renamedTask);
+            taskList.getTask(index).setDueDate(rescheduledDueDate);
 
             System.out.println("\n\nThis task has been changed to:");
-            System.out.println("\n" + taskList.produceTask(index).printTask());
+            System.out.println("\n" + taskList.getTask(index).printTask());
         }
     }
 
@@ -190,7 +189,7 @@ public class GetItDoneApp {
                 ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
 
                 for (int count = 0; count < taskList.numTasks(); count++) {
-                    currentTaskList.add(taskList.produceTask(count + 1));
+                    currentTaskList.add(taskList.getTask(count + 1));
                 }
 
                 for (Task task : currentTaskList) {
