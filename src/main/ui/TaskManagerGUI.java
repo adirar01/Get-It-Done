@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 // GUI of Get It Done app
 public class TaskManagerGUI extends JFrame {
@@ -15,6 +16,8 @@ public class TaskManagerGUI extends JFrame {
     * Adapted from Oracle's list swing tutorials and
     * other provided class repositories
     * */
+    private DefaultListModel extractedTasks = new DefaultListModel();
+
     private TaskList taskList = new TaskList();
     protected JList<Task> tasks;
     protected static final String addTaskString = "Add Task";
@@ -59,6 +62,7 @@ public class TaskManagerGUI extends JFrame {
         buildTaskListViewer();
         buildInteractionButtons();
         this.addTaskButton.addActionListener(new AddTaskListener());
+        this.deleteTaskButton.addActionListener(new DeleteTaskListener());
         add(title);
         add(taskSpecification);
         add(taskListViewer);
@@ -118,7 +122,7 @@ public class TaskManagerGUI extends JFrame {
     public void buildTaskListViewer() {
         this.taskListViewer = new JPanel();
         taskListViewer.setLayout(new GridLayout(1,1));
-        this.tasks = new JList();
+        this.tasks = new JList(extractedTasks);
         tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tasks.setVisibleRowCount(5);
         this.taskListScrollPane = new JScrollPane(tasks);
@@ -139,31 +143,69 @@ public class TaskManagerGUI extends JFrame {
         this.interactionButtons.add(loadTaskListButton);
     }
 
-    class AddTaskListener implements ActionListener { // TODO:what
+    class AddTaskListener implements ActionListener { // TODO: check empty?
         @Override
         public void actionPerformed(ActionEvent e) {
-            // create a new task
+            if (taskName.getText().equals("") || dueDate.getText().equals("")) {
+                Toolkit.getDefaultToolkit().beep();
+                String errorMessageEmpty = "One or more of the task specification fields are empty."
+                        + "\nPlease specify a task to use the add feature.";
+                JOptionPane.showMessageDialog(new JFrame(), errorMessageEmpty,
+                        "Empty Error", JOptionPane.ERROR_MESSAGE);
+            } else if (taskList.numTasks() >= TaskList.MAX_NUM_TASKS) {
+                String errorMessageFull = "Maximum number of manageable tasks exceeded."
+                        + "\nPlease complete/ delete a task to add a new one.";
+                JOptionPane.showMessageDialog(new JFrame(), errorMessageFull,
+                        "Full Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                createAndAddNewTask();
+                resetTextFields();
+            }
+        }
+
+        private void createAndAddNewTask() {
             String taskNameString = taskName.getText();
             String dueDateString = dueDate.getText();
             Task createdTask = new Task(taskNameString, dueDateString);
 
             // add a task the task list
             taskList.addTask(createdTask);
-            System.out.println(taskList.getTask(taskList.numTasks()).printTask()); // get whatever i just added
+
+            Task justAdded = taskList.getTask(taskList.numTasks());
+
+            StringBuilder newTaskEntry = new StringBuilder();
+            newTaskEntry.append(taskList.getIndexOf(justAdded) + 1).append(". ");
+            newTaskEntry.append(taskNameTitleString).append(" ");
+            newTaskEntry.append(justAdded.getTaskName());
+            newTaskEntry.append("\t\t\t\t\t\t\t\t\t\t\t\t");
+            newTaskEntry.append(dueDateTitleString).append(" ");
+            newTaskEntry.append(justAdded.getDueDate());
+
+            extractedTasks.addElement(newTaskEntry);
+        }
+
+        private void resetTextFields() {
+            taskName.setText("");
+            dueDate.setText("");
         }
     }
 
-    public class DeleteTaskListener extends TaskManagerGUI implements ActionListener {
+    public class DeleteTaskListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // delete task from tasklist
-
-            // update JList with new task list + refresh screen
+            int selectedIndex = tasks.getSelectedIndex();
+            
+            if (selectedIndex == -1) {
+                Toolkit.getDefaultToolkit().beep();
+            } else {
+                taskList.deleteTask(selectedIndex + 1);
+                extractedTasks.remove(selectedIndex);
+            }
         }
     }
 
-    public class EditTaskListener extends TaskManagerGUI implements ActionListener {
+    public class EditTaskListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -173,7 +215,7 @@ public class TaskManagerGUI extends JFrame {
         }
     }
 
-    public class SaveTaskListListener extends TaskManagerGUI implements ActionListener {
+    public class SaveTaskListListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -183,7 +225,7 @@ public class TaskManagerGUI extends JFrame {
         }
     }
 
-    public class LoadTaskListListener extends TaskManagerGUI implements ActionListener {
+    public class LoadTaskListListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

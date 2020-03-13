@@ -60,6 +60,14 @@ public class TaskList {
         return taskList.size();
     }
 
+
+    /*
+     * EFFECTS: returns number of elements in task list
+     * */
+    public int getIndexOf(Task task) { // TODO: do i need to test?
+        return taskList.indexOf(task);
+    }
+
     /*
      * REQUIRES: a task must exist at the given index
      * EFFECTS: returns selected task
