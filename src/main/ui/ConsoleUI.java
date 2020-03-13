@@ -200,7 +200,7 @@ public class ConsoleUI {
 
                 System.out.println("Accounts saved to file " + TASK_TRACKER_FILE);
             } catch (FileNotFoundException e) {
-                System.out.println("Unable to save accounts to " + TASK_TRACKER_FILE);
+                System.out.println("Unable to save data to " + TASK_TRACKER_FILE);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 // this is due to a programming error thing

@@ -2,12 +2,20 @@ package ui;
 
 import model.Task;
 import model.TaskList;
+import persistence.Reader;
+import persistence.Writer;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 // GUI of Get It Done app
@@ -18,13 +26,13 @@ public class TaskManagerGUI extends JFrame {
      * */
     private DefaultListModel extractedTasks = new DefaultListModel();
 
-    private TaskList taskList = new TaskList();
+    private static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
+    private TaskList taskList; // remember you broke this
     protected JList<Task> tasks;
     protected static final String addTaskString = "Add Task";
     protected static final String deleteTaskString = "Delete Task";
     protected static final String editTaskString = "Edit Task";
     protected static final String saveTaskListString = "Save Task List";
-    protected static final String loadTaskListString = "Load Task List";
     protected static final String titleText = "Get It Done!";
     protected static final String taskNameTitleString = "Task Name:";
     protected static final String dueDateTitleString = "Due Date:";
@@ -33,7 +41,6 @@ public class TaskManagerGUI extends JFrame {
     protected JButton deleteTaskButton;
     protected JButton editTaskButton;
     protected JButton saveTaskListButton;
-    protected JButton loadTaskListButton;
     protected JTextField taskName;
     protected JTextField dueDate;
 
@@ -64,6 +71,8 @@ public class TaskManagerGUI extends JFrame {
         this.addTaskButton.addActionListener(new AddTaskListener());
         this.deleteTaskButton.addActionListener(new DeleteTaskListener());
         this.editTaskButton.addActionListener(new EditTaskListener());
+        this.saveTaskListButton.addActionListener(new SaveTaskListListener());
+        loadTaskList();
         add(title);
         add(taskSpecification);
         add(taskListViewer);
@@ -72,7 +81,29 @@ public class TaskManagerGUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(true);
+    }
 
+    private void loadTaskList() {
+        try {
+            taskList = Reader.readTaskList(new File(TASK_TRACKER_FILE));
+            updateVisualList();
+        } catch (IOException e) {
+            taskList = new TaskList();
+        }
+    }
+
+    private void updateVisualList() {
+        extractedTasks.removeAllElements(); // start from nothing
+        ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
+
+        for (int count = 0; count < taskList.numTasks(); count++) {
+            currentTaskList.add(taskList.getTask(count + 1));
+        }
+
+        for (Task task : currentTaskList) {
+            StringBuilder newTaskEntry = printTaskInList(task);
+            extractedTasks.addElement(newTaskEntry);
+        }
     }
 
     public void buildTitle() {
@@ -87,16 +118,9 @@ public class TaskManagerGUI extends JFrame {
     }
 
     public void buildTaskSpecification() {
-        this.taskSpecification = new JPanel();
-        this.taskSpecification.setLayout(new GridBagLayout());
-        this.taskName = new JTextField(10);
-        this.dueDate = new JTextField(10);
-        this.addTaskButton = new JButton(addTaskString);
-        this.taskNameTitle = new JLabel(taskNameTitleString);
-        this.dueDateTitle = new JLabel(dueDateTitleString);
+        initializeBuildTaskSpecificationFields();
 
         GridBagConstraints c = new GridBagConstraints();
-
 
         c.gridx = 0;
         c.gridy = 0;
@@ -120,6 +144,16 @@ public class TaskManagerGUI extends JFrame {
         this.taskSpecification.add(this.addTaskButton, c);
     }
 
+    private void initializeBuildTaskSpecificationFields() {
+        this.taskSpecification = new JPanel();
+        this.taskSpecification.setLayout(new GridBagLayout());
+        this.taskName = new JTextField(10);
+        this.dueDate = new JTextField(10);
+        this.addTaskButton = new JButton(addTaskString);
+        this.taskNameTitle = new JLabel(taskNameTitleString);
+        this.dueDateTitle = new JLabel(dueDateTitleString);
+    }
+
     public void buildTaskListViewer() {
         this.taskListViewer = new JPanel();
         taskListViewer.setLayout(new GridLayout(1, 1));
@@ -132,16 +166,25 @@ public class TaskManagerGUI extends JFrame {
 
     public void buildInteractionButtons() {
         this.interactionButtons = new JPanel();
-        this.interactionButtons.setLayout(new GridLayout(2, 2));
+        this.interactionButtons.setLayout(new GridBagLayout());
         this.deleteTaskButton = new JButton(deleteTaskString);
         this.editTaskButton = new JButton(editTaskString);
         this.saveTaskListButton = new JButton(saveTaskListString);
-        this.loadTaskListButton = new JButton(loadTaskListString);
 
-        this.interactionButtons.add(deleteTaskButton);
-        this.interactionButtons.add(editTaskButton);
-        this.interactionButtons.add(saveTaskListButton);
-        this.interactionButtons.add(loadTaskListButton);
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        this.interactionButtons.add(deleteTaskButton, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        this.interactionButtons.add(editTaskButton, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        this.interactionButtons.add(saveTaskListButton, c);
     }
 
     private void resetTextFields() {
@@ -149,7 +192,7 @@ public class TaskManagerGUI extends JFrame {
         dueDate.setText("");
     }
 
-    class AddTaskListener implements ActionListener { // TODO: check empty?
+    class AddTaskListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (taskName.getText().equals("") || dueDate.getText().equals("")) {
@@ -179,6 +222,12 @@ public class TaskManagerGUI extends JFrame {
     }
 
     private void fullErrorDialogBox() {
+        try {
+            playZeldaSound();
+        } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
+        }
+
         String errorMessageFull = "Maximum number of manageable tasks exceeded."
                 + "\nPlease complete/ delete a task to add a new one.";
         JOptionPane.showMessageDialog(new JFrame(), errorMessageFull,
@@ -186,11 +235,40 @@ public class TaskManagerGUI extends JFrame {
     }
 
     private void emptyErrorDialogBox() {
-        Toolkit.getDefaultToolkit().beep();
+        try {
+            playZeldaSound();
+        } catch (Exception e) {
+            Toolkit.getDefaultToolkit().beep();
+        }
         String errorMessageEmpty = "One or more of the task specification fields are empty."
                 + "\nPlease specify a task to use this feature.";
         JOptionPane.showMessageDialog(new JFrame(), errorMessageEmpty,
                 "Empty Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void playZeldaSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        /*
+        * The following code is adapted from:
+        * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
+        * Audio source:
+        * https://www.youtube.com/watch?v=LqkRghWjD0Y
+        *  */
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/zelda.wav"));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
+    }
+
+    private void savedDialogBox() {
+        String savedMessage = "Your Task List has successfully saved!";
+        JOptionPane.showMessageDialog(new JFrame(), savedMessage,
+                "Saved", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void fileNotFoundDialogBox() {
+        String fileNotFound = "File not found! Please consult the developer!";
+        JOptionPane.showMessageDialog(new JFrame(), fileNotFound,
+                "Error 404", JOptionPane.ERROR_MESSAGE);
     }
 
     private StringBuilder printTaskInList(Task justAdded) {
@@ -215,6 +293,7 @@ public class TaskManagerGUI extends JFrame {
             } else {
                 taskList.deleteTask(selectedIndex + 1);
                 extractedTasks.remove(selectedIndex);
+                updateVisualList();
             }
         }
     }
@@ -247,19 +326,47 @@ public class TaskManagerGUI extends JFrame {
 
     public class SaveTaskListListener implements ActionListener {
 
+        private void emptyTaskListError() {
+            try {
+                playZeldaSound();
+            } catch (Exception e) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+            String errorMessageEmpty = "Could not save. Your Task List is empty.\nAdd tasks to use this feature.";
+            JOptionPane.showMessageDialog(new JFrame(), errorMessageEmpty,
+                    "Empty Error", JOptionPane.ERROR_MESSAGE);
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (taskList.numTasks() == 0) {
+                emptyTaskListError();
+            } else {
+                try {
+                    Writer writer = new Writer(new File(TASK_TRACKER_FILE));
+
+                    ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
+
+                    for (int count = 0; count < taskList.numTasks(); count++) {
+                        currentTaskList.add(taskList.getTask(count + 1));
+                    }
+
+                    for (Task task : currentTaskList) {
+                        writer.write(task); // writes each task to file on a new line
+                    }
+
+                    writer.close();
+
+                    savedDialogBox();
+                } catch (FileNotFoundException e1) {
+                    fileNotFoundDialogBox();
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+            }
             // save tasklist to file
 
             // dialog box about success or failure otherwise
-        }
-    }
-
-    public class LoadTaskListListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // load tasklist into screen
         }
     }
 

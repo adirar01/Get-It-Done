@@ -3,6 +3,7 @@ package ui;
 import apple.laf.AquaLookAndFeel;
 import com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -10,6 +11,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class LoginGUI extends JFrame {
     private static final String usernameText = "Username:";
@@ -84,6 +87,11 @@ public class LoginGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (verifyLogin()) {
+                    try {
+                        playMarioSound();
+                    } catch (Exception ex) {
+                        Toolkit.getDefaultToolkit().beep();
+                    }
                     JOptionPane.showMessageDialog(new JFrame(), "Login Successful");
                 } else {
                     JOptionPane.showMessageDialog(new JFrame(), "Incorrect Username or Password :(");
@@ -106,6 +114,19 @@ public class LoginGUI extends JFrame {
         String givenPassword = String.valueOf(passwordInput.getPassword());
 
         return givenUsername.equals(adminUserName) && givenPassword.equals(adminPass);
+    }
+
+    private void playMarioSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        /*
+         * The following code is adapted from:
+         * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
+         * Audio source:
+         * https://www.youtube.com/watch?v=Aax1SEZESts
+         *  */
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/mario.wav"));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
     }
 
     public static void main(String[] args) {
