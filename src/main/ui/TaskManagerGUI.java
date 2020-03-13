@@ -37,6 +37,7 @@ public class TaskManagerGUI extends JPanel {
     protected static final String titleText = "Get It Done!";
     protected static final String taskNameTitleString = "Task Name:";
     protected static final String dueDateTitleString = "Due Date:";
+    protected static final String taskListTitleString = "Your Task List:";
 
     protected JButton addTaskButton;
     protected JButton deleteTaskButton;
@@ -49,6 +50,7 @@ public class TaskManagerGUI extends JPanel {
     protected JLabel taskNameTitle;
     protected JLabel dueDateTitle;
     protected JLabel imageLabel;
+    protected JLabel taskListTitle;
 
     protected JPanel title;
     protected JPanel taskSpecification;
@@ -58,7 +60,7 @@ public class TaskManagerGUI extends JPanel {
     protected JScrollPane taskListScrollPane;
 
     private static final Color background1 = new Color(201, 242, 255);//
-    // private static final Color background2 = new Color(251, 255, 201);
+    private static final Color background2 = new Color(251, 255, 201);
 
 
     public TaskManagerGUI() {
@@ -185,12 +187,22 @@ public class TaskManagerGUI extends JPanel {
 
     public void buildTaskListViewer() {
         this.taskListViewer = new JPanel();
-        taskListViewer.setLayout(new GridLayout(1, 1));
+        taskListViewer.setBackground(background2);
+        Font font = new Font("Century Schoolbook", Font.BOLD,15);
+        taskListViewer.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        this.taskListTitle = new JLabel(this.taskListTitleString);
         this.tasks = new JList(extractedTasks);
         tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tasks.setVisibleRowCount(5);
         this.taskListScrollPane = new JScrollPane(tasks);
-        taskListViewer.add(taskListScrollPane);
+        this.taskListTitle.setFont(font);
+        c.gridy = 0;
+        taskListViewer.add(taskListTitle, c);
+        c.insets = new Insets(10, 0, 10, 0);
+        c.anchor = GridBagConstraints.LINE_END;
+        c.gridy = 5;
+        taskListViewer.add(taskListScrollPane, c);
     }
 
     public void buildInteractionButtons() {
