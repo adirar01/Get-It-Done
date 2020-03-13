@@ -27,8 +27,8 @@ public class LoginGUI extends JPanel {
     private JLabel topTitle;
     private JLabel imageLabel;
 
-    private JTextField usernameInput;
-    private JPasswordField passwordInput;
+    protected JTextField usernameInput;
+    protected JPasswordField passwordInput;
 
     protected JButton login;
     protected JButton quit;

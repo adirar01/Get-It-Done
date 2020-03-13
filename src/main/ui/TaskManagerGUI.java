@@ -74,6 +74,8 @@ public class TaskManagerGUI extends JPanel {
         buildTaskListViewer();
         buildInteractionButtons();
         this.addTaskButton.addActionListener(new AddTaskListener());
+        this.taskName.addActionListener(new AddTaskListener());
+        this.dueDate.addActionListener(new AddTaskListener());
         this.deleteTaskButton.addActionListener(new DeleteTaskListener());
         this.editTaskButton.addActionListener(new EditTaskListener());
         this.saveTaskListButton.addActionListener(new SaveTaskListListener());

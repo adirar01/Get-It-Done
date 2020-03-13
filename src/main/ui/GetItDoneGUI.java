@@ -36,22 +36,24 @@ public class GetItDoneGUI extends JFrame {
             }
         });
 
-        loginGUI.login.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (loginGUI.verifyLogin()) {
-                            try {
-                                loginGUI.playMarioSound();
-                            } catch (Exception ex) {
-                                Toolkit.getDefaultToolkit().beep();
-                            }
-                            setContentPane(taskManagerGUI);
-                            revalidate();
-                        } else {
-                            loginGUI.resetTextFields();
-                        }
-                    }
-                });
+        loginGUI.login.addActionListener(new LoginListener());
+        loginGUI.passwordInput.addActionListener(new LoginListener());
+    }
+
+    class LoginListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (loginGUI.verifyLogin()) {
+                try {
+                    loginGUI.playMarioSound();
+                } catch (Exception ex) {
+                    Toolkit.getDefaultToolkit().beep();
+                }
+                setContentPane(taskManagerGUI);
+                revalidate();
+            } else {
+                loginGUI.resetTextFields();
+            }
+        }
     }
 }
