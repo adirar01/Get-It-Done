@@ -5,6 +5,7 @@ import model.TaskList;
 import persistence.Reader;
 import persistence.Writer;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 // GUI of Get It Done app
-public class TaskManagerGUI extends JFrame {
+public class TaskManagerGUI extends JPanel {
     /*
      * Adapted from Oracle's list swing tutorials and
      * other provided class repositories
@@ -47,6 +49,7 @@ public class TaskManagerGUI extends JFrame {
     protected JLabel topTitle;
     protected JLabel taskNameTitle;
     protected JLabel dueDateTitle;
+    protected JLabel imageLabel;
 
     protected JPanel title;
     protected JPanel taskSpecification;
@@ -55,13 +58,15 @@ public class TaskManagerGUI extends JFrame {
 
     protected JScrollPane taskListScrollPane;
 
+    private static final Color background1 = new Color(201, 242, 255);//
+    // private static final Color background2 = new Color(251, 255, 201);
+
 
     public TaskManagerGUI() {
         //Create and set up the window.
-        super("Get It Done!");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 600));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        setBorder(new EmptyBorder(13, 13, 13, 13));
+        setBackground(background1);
         setLayout(new GridLayout(4, 1));
         GridBagConstraints c = new GridBagConstraints();
         buildTitle();
@@ -77,10 +82,7 @@ public class TaskManagerGUI extends JFrame {
         add(taskSpecification);
         add(taskListViewer);
         add(interactionButtons);
-        pack();
-        setLocationRelativeTo(null);
         setVisible(true);
-        setResizable(true);
     }
 
     private void loadTaskList() {
@@ -108,17 +110,38 @@ public class TaskManagerGUI extends JFrame {
 
     public void buildTitle() {
         this.title = new JPanel();
-        title.setLayout(new GridBagLayout());
+        this.title.setBackground(background1);
+        this.title.setLayout(new GridBagLayout());
         this.topTitle = new JLabel(titleText);
-        Font font = new Font("Century Gothic", Font.BOLD, 35);
+        Font font = new Font("Century Gothic", Font.BOLD, 55);
         this.topTitle.setFont(font);
         GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.CENTER;
+        c.gridy = 0;
+        c.gridheight = 2;
         title.add(topTitle, c);
+        c.gridy = 1;
+
+        try {
+            drawIcon();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        c.gridy = 3;
+        c.gridheight = 1;
+        title.add(imageLabel, c);
     }
+
+    private void drawIcon() throws IOException {
+        BufferedImage myPicture = ImageIO.read(new File("./data/check.png"));
+        Image newImage = myPicture.getScaledInstance(125, 160, Image.SCALE_SMOOTH);
+        this.imageLabel = new JLabel(new ImageIcon(newImage));
+    }
+
 
     public void buildTaskSpecification() {
         initializeBuildTaskSpecificationFields();
+        taskSpecification.setBackground(background1);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -152,6 +175,11 @@ public class TaskManagerGUI extends JFrame {
         this.addTaskButton = new JButton(addTaskString);
         this.taskNameTitle = new JLabel(taskNameTitleString);
         this.dueDateTitle = new JLabel(dueDateTitleString);
+        Font font1 = new Font("Century Schoolbook", Font.BOLD,15);
+        Font font2 = new Font("Century Schoolbook", Font.ITALIC,15);
+        this.taskNameTitle.setFont(font1);
+        this.dueDateTitle.setFont(font1);
+        this.addTaskButton.setFont(font2);
     }
 
     public void buildTaskListViewer() {
@@ -166,10 +194,15 @@ public class TaskManagerGUI extends JFrame {
 
     public void buildInteractionButtons() {
         this.interactionButtons = new JPanel();
+        interactionButtons.setBackground(background1);
         this.interactionButtons.setLayout(new GridBagLayout());
         this.deleteTaskButton = new JButton(deleteTaskString);
         this.editTaskButton = new JButton(editTaskString);
         this.saveTaskListButton = new JButton(saveTaskListString);
+        Font font = new Font("Century Schoolbook", Font.ITALIC,15);
+        this.deleteTaskButton.setFont(font);
+        this.editTaskButton.setFont(font);
+        this.saveTaskListButton.setFont(font);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -248,11 +281,11 @@ public class TaskManagerGUI extends JFrame {
 
     private void playZeldaSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         /*
-        * The following code is adapted from:
-        * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
-        * Audio source:
-        * https://www.youtube.com/watch?v=LqkRghWjD0Y
-        *  */
+         * The following code is adapted from:
+         * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
+         * Audio source:
+         * https://www.youtube.com/watch?v=LqkRghWjD0Y
+         *  */
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/zelda.wav"));
         Clip clip = AudioSystem.getClip();
         clip.open(audioInputStream);
@@ -289,7 +322,11 @@ public class TaskManagerGUI extends JFrame {
             int selectedIndex = tasks.getSelectedIndex();
 
             if (selectedIndex == -1) {
-                Toolkit.getDefaultToolkit().beep();
+                try {
+                    playZeldaSound();
+                } catch (Exception e1) {
+                    Toolkit.getDefaultToolkit().beep();
+                }
             } else {
                 taskList.deleteTask(selectedIndex + 1);
                 extractedTasks.remove(selectedIndex);
@@ -307,7 +344,11 @@ public class TaskManagerGUI extends JFrame {
             String dueDateString = dueDate.getText();
 
             if (selectedIndex == -1) {
-                Toolkit.getDefaultToolkit().beep();
+                try {
+                    playZeldaSound();
+                } catch (Exception e1) {
+                    Toolkit.getDefaultToolkit().beep();
+                }
             } else if (taskNameString.equals("") || dueDateString.equals("")) {
                 emptyErrorDialogBox();
             } else {
@@ -356,7 +397,6 @@ public class TaskManagerGUI extends JFrame {
                     }
 
                     writer.close();
-
                     savedDialogBox();
                 } catch (FileNotFoundException e1) {
                     fileNotFoundDialogBox();
@@ -364,21 +404,7 @@ public class TaskManagerGUI extends JFrame {
                     e1.printStackTrace();
                 }
             }
-            // save tasklist to file
-
-            // dialog box about success or failure otherwise
         }
     }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new TaskManagerGUI();
-            }
-        });
-    }
-
 }
 
