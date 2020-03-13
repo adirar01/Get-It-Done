@@ -13,9 +13,9 @@ import java.util.ArrayList;
 // GUI of Get It Done app
 public class TaskManagerGUI extends JFrame {
     /*
-    * Adapted from Oracle's list swing tutorials and
-    * other provided class repositories
-    * */
+     * Adapted from Oracle's list swing tutorials and
+     * other provided class repositories
+     * */
     private DefaultListModel extractedTasks = new DefaultListModel();
 
     private TaskList taskList = new TaskList();
@@ -63,6 +63,7 @@ public class TaskManagerGUI extends JFrame {
         buildInteractionButtons();
         this.addTaskButton.addActionListener(new AddTaskListener());
         this.deleteTaskButton.addActionListener(new DeleteTaskListener());
+        this.editTaskButton.addActionListener(new EditTaskListener());
         add(title);
         add(taskSpecification);
         add(taskListViewer);
@@ -78,7 +79,7 @@ public class TaskManagerGUI extends JFrame {
         this.title = new JPanel();
         title.setLayout(new GridBagLayout());
         this.topTitle = new JLabel(titleText);
-        Font font = new Font("Century Gothic", Font.BOLD,35);
+        Font font = new Font("Century Gothic", Font.BOLD, 35);
         this.topTitle.setFont(font);
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.CENTER;
@@ -121,7 +122,7 @@ public class TaskManagerGUI extends JFrame {
 
     public void buildTaskListViewer() {
         this.taskListViewer = new JPanel();
-        taskListViewer.setLayout(new GridLayout(1,1));
+        taskListViewer.setLayout(new GridLayout(1, 1));
         this.tasks = new JList(extractedTasks);
         tasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tasks.setVisibleRowCount(5);
@@ -131,7 +132,7 @@ public class TaskManagerGUI extends JFrame {
 
     public void buildInteractionButtons() {
         this.interactionButtons = new JPanel();
-        this.interactionButtons.setLayout(new GridLayout(2,2));
+        this.interactionButtons.setLayout(new GridLayout(2, 2));
         this.deleteTaskButton = new JButton(deleteTaskString);
         this.editTaskButton = new JButton(editTaskString);
         this.saveTaskListButton = new JButton(saveTaskListString);
@@ -143,20 +144,18 @@ public class TaskManagerGUI extends JFrame {
         this.interactionButtons.add(loadTaskListButton);
     }
 
+    private void resetTextFields() {
+        taskName.setText("");
+        dueDate.setText("");
+    }
+
     class AddTaskListener implements ActionListener { // TODO: check empty?
         @Override
         public void actionPerformed(ActionEvent e) {
             if (taskName.getText().equals("") || dueDate.getText().equals("")) {
-                Toolkit.getDefaultToolkit().beep();
-                String errorMessageEmpty = "One or more of the task specification fields are empty."
-                        + "\nPlease specify a task to use the add feature.";
-                JOptionPane.showMessageDialog(new JFrame(), errorMessageEmpty,
-                        "Empty Error", JOptionPane.ERROR_MESSAGE);
+                emptyErrorDialogBox();
             } else if (taskList.numTasks() >= TaskList.MAX_NUM_TASKS) {
-                String errorMessageFull = "Maximum number of manageable tasks exceeded."
-                        + "\nPlease complete/ delete a task to add a new one.";
-                JOptionPane.showMessageDialog(new JFrame(), errorMessageFull,
-                        "Full Error", JOptionPane.ERROR_MESSAGE);
+                fullErrorDialogBox();
             } else {
                 createAndAddNewTask();
                 resetTextFields();
@@ -173,21 +172,36 @@ public class TaskManagerGUI extends JFrame {
 
             Task justAdded = taskList.getTask(taskList.numTasks());
 
-            StringBuilder newTaskEntry = new StringBuilder();
-            newTaskEntry.append(taskList.getIndexOf(justAdded) + 1).append(". ");
-            newTaskEntry.append(taskNameTitleString).append(" ");
-            newTaskEntry.append(justAdded.getTaskName());
-            newTaskEntry.append("\t\t\t\t\t\t\t\t\t\t\t\t");
-            newTaskEntry.append(dueDateTitleString).append(" ");
-            newTaskEntry.append(justAdded.getDueDate());
+            StringBuilder newTaskEntry = printTaskInList(justAdded);
 
             extractedTasks.addElement(newTaskEntry);
         }
+    }
 
-        private void resetTextFields() {
-            taskName.setText("");
-            dueDate.setText("");
-        }
+    private void fullErrorDialogBox() {
+        String errorMessageFull = "Maximum number of manageable tasks exceeded."
+                + "\nPlease complete/ delete a task to add a new one.";
+        JOptionPane.showMessageDialog(new JFrame(), errorMessageFull,
+                "Full Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void emptyErrorDialogBox() {
+        Toolkit.getDefaultToolkit().beep();
+        String errorMessageEmpty = "One or more of the task specification fields are empty."
+                + "\nPlease specify a task to use this feature.";
+        JOptionPane.showMessageDialog(new JFrame(), errorMessageEmpty,
+                "Empty Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private StringBuilder printTaskInList(Task justAdded) {
+        StringBuilder newTaskEntry = new StringBuilder();
+        newTaskEntry.append(taskList.getIndexOf(justAdded) + 1).append(". ");
+        newTaskEntry.append(taskNameTitleString).append(" ");
+        newTaskEntry.append(justAdded.getTaskName());
+        newTaskEntry.append("\t\t\t\t\t\t\t\t\t\t\t\t");
+        newTaskEntry.append(dueDateTitleString).append(" ");
+        newTaskEntry.append(justAdded.getDueDate());
+        return newTaskEntry;
     }
 
     public class DeleteTaskListener implements ActionListener {
@@ -195,7 +209,7 @@ public class TaskManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             int selectedIndex = tasks.getSelectedIndex();
-            
+
             if (selectedIndex == -1) {
                 Toolkit.getDefaultToolkit().beep();
             } else {
@@ -209,9 +223,25 @@ public class TaskManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // edit task in tasklist
+            int selectedIndex = tasks.getSelectedIndex();
+            String taskNameString = taskName.getText();
+            String dueDateString = dueDate.getText();
 
-            // update JList with new task list + refresh screen
+            if (selectedIndex == -1) {
+                Toolkit.getDefaultToolkit().beep();
+            } else if (taskNameString.equals("") || dueDateString.equals("")) {
+                emptyErrorDialogBox();
+            } else {
+                Task taskToEdit = taskList.getTask(selectedIndex + 1);
+                taskToEdit.setTaskName(taskNameString);
+                taskToEdit.setDueDate(dueDateString);
+
+                StringBuilder editedTaskEntry = printTaskInList(taskToEdit);
+
+                extractedTasks.set(selectedIndex, editedTaskEntry);
+
+                resetTextFields();
+            }
         }
     }
 
