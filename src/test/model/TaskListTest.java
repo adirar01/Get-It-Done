@@ -129,6 +129,23 @@ public class TaskListTest {
         assertEquals(task2, testTaskList.getTask(2));
         assertEquals(task1, testTaskList.getTask(1));
     }
+
+    @Test
+    public void testGetIndexOfSingle() {
+        testTaskList.addTask(task1);
+        assertEquals(0, testTaskList.getIndexOf(task1));
+    }
+
+    @Test
+    public void testGetIndexOfMultiple() {
+        testTaskList.addTask(task1);
+        testTaskList.addTask(task2);
+        testTaskList.addTask(task3);
+
+        assertEquals(0, testTaskList.getIndexOf(task1));
+        assertEquals(1, testTaskList.getIndexOf(task2));
+        assertEquals(2, testTaskList.getIndexOf(task3));
+    }
 }
 
 
