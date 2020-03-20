@@ -143,7 +143,7 @@ public class LoginGUI extends JPanel {
          * The following code is adapted from:
          * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
          * Audio source:
-         * https://www.youtube.com/watch?v=Aax1SEZESts
+         * https://www.youtube.com/watch?v=VH8mQRXemuo
          *  */
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/mario.wav"));
         Clip clip = AudioSystem.getClip();
