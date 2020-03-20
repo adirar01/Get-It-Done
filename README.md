@@ -34,3 +34,8 @@ The task should appear in the scrollable task list panel.
 - You can also edit a task in the task list by selecting a task, typing what you want the edited task to look in the appropriate text fields, and clicking on edit. The task should change in the task list panel below.
 - You can also delete a task from the task list by selecting a task and clicking on the delete button.
 - If you try to do something invalid (like add a task without text, edit/ delete a task without selecting a task, etc) you should trigger another audio component (and at times a dialogue box) signalling error
+
+## Image/ Audio Sources
+- The Zelda "treasure found" sound effect obtained from: https://www.youtube.com/watch?v=LqkRghWjD0Y
+- The Mario theme music sound effect obtained from: https://www.youtube.com/watch?v=Aax1SEZESts
+- Check mark image used as logo obtained from: https://www.iconfinder.com/icons/1398912/check_circle_correct_mark_success_tick_yes_icon
