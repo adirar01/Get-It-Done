@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Get It Done! application
+// Console UI for Get It Done application
 public class ConsoleUI {
 
     //***

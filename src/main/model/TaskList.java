@@ -62,7 +62,7 @@ public class TaskList {
 
 
     /*
-     * EFFECTS: returns number of elements in task list
+     * EFFECTS: returns index of given task in task list; otherwise returns -1.
      * */
     public int getIndexOf(Task task) { // TODO: do i need to test?
         return taskList.indexOf(task);

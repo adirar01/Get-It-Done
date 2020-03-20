@@ -9,13 +9,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+// GUI of Login panel of Get It Done app
 public class LoginGUI extends JPanel {
     private static final String usernameText = "Username:";
     private static final String passwordText = "Password:";
     private static final String loginText = "Log in";
     private static final String quitText = "Quit Application";
     private static final String adminUserName = "Gandalf";
-    private static final String adminPass = "Treebeard";
+    private static final String adminPass = "Gandalf";
     private static final String titleText = "Get It Done!";
     private static final Color background = new Color(203, 255, 191);
 
@@ -33,6 +34,9 @@ public class LoginGUI extends JPanel {
     private JPanel title;
     private JPanel loginMenu;
 
+    /*
+     * EFFECTS: creates and initializes Login panel and functionality
+     * */
     public LoginGUI() {
         setBackground(background);
         setPreferredSize(new Dimension(500, 650));
@@ -46,12 +50,15 @@ public class LoginGUI extends JPanel {
 
     }
 
-    public void buildTitle() {
+    /*
+     * EFFECTS: creates the title and check mark logo in title panel
+     * */
+    private void buildTitle() {
         this.title = new JPanel();
         title.setBackground(background);
         title.setLayout(new GridBagLayout());
         this.topTitle = new JLabel(titleText);
-        Font font = new Font("Century Schoolbook", Font.BOLD,65);
+        Font font = new Font("Century Schoolbook", Font.BOLD, 65);
         this.topTitle.setFont(font);
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;
@@ -66,13 +73,19 @@ public class LoginGUI extends JPanel {
 
     }
 
+    /*
+     * EFFECTS: reads check mark image and places image in imageLabel JLabel
+     * */
     private void drawIcon() throws IOException {
         BufferedImage myPicture = ImageIO.read(new File("./data/check.png"));
         Image newImage = myPicture.getScaledInstance(140, 180, Image.SCALE_SMOOTH);
         this.imageLabel = new JLabel(new ImageIcon(newImage));
     }
 
-    public void buildLoginMenu() {
+    /*
+     * EFFECTS: places the text fields and buttons within the loginMenu panel
+     * */
+    private void buildLoginMenu() {
         this.loginMenu = new JPanel();
         loginMenu.setBackground(background);
         loginMenu.setLayout(new GridLayout(3, 2, 0, 80));
@@ -85,9 +98,12 @@ public class LoginGUI extends JPanel {
         this.loginMenu.add(this.quit);
     }
 
-    public void initializeLoginFields() {
-        Font font1 = new Font("Century Schoolbook", Font.BOLD,20);
-        Font font2 = new Font("Century Schoolbook", Font.ITALIC,15);
+    /*
+     * EFFECTS: initializes fields required for the login panel
+     * */
+    private void initializeLoginFields() {
+        Font font1 = new Font("Century Schoolbook", Font.BOLD, 20);
+        Font font2 = new Font("Century Schoolbook", Font.ITALIC, 15);
         this.username = new JLabel(usernameText);
         this.username.setFont(font1);
         this.password = new JLabel(passwordText);
@@ -100,18 +116,28 @@ public class LoginGUI extends JPanel {
         this.quit.setFont(font2);
     }
 
+    /*
+     * EFFECTS: resets usernameInput and passwordInput text fields
+     * */
     protected void resetTextFields() {
         this.usernameInput.setText("");
         this.passwordInput.setText("");
     }
 
-    public boolean verifyLogin() {
+    /*
+     * EFFECTS: returns true if user inputted credentials match admin credentials;
+     * otherwise returns false
+     * */
+    protected boolean verifyLogin() {
         String givenUsername = usernameInput.getText();
         String givenPassword = String.valueOf(passwordInput.getPassword());
 
         return givenUsername.equals(adminUserName) && givenPassword.equals(adminPass);
     }
 
+    /*
+     * EFFECTS: plays the mario.wav sound clip from data folder
+     * */
     protected void playMarioSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         /*
          * The following code is adapted from:
