@@ -27,7 +27,6 @@ public class TaskManagerGUI extends JPanel {
      * */
     private DefaultListModel extractedTasks = new DefaultListModel();
 
-    private static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
     private TaskList taskList; // remember you broke this
     protected JList<Task> tasks;
     protected static final String addTaskString = "Add Task";
@@ -38,6 +37,7 @@ public class TaskManagerGUI extends JPanel {
     protected static final String taskNameTitleString = "Task Name:";
     protected static final String dueDateTitleString = "Due Date:";
     protected static final String taskListTitleString = "Your Task List:";
+    private static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
 
     protected JButton addTaskButton;
     protected JButton deleteTaskButton;
@@ -447,7 +447,7 @@ public class TaskManagerGUI extends JPanel {
     public class SaveTaskListListener implements ActionListener {
 
         /*
-         * EFFECTS: saves current task list to file, otherwise signals erros
+         * EFFECTS: saves current task list to file, otherwise signals error
          * if task list cannot be saved
          * */
         @Override
