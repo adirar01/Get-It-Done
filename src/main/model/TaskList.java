@@ -16,15 +16,25 @@ public class TaskList {
 
     /*
      * MODIFIES: this
-     * EFFECTS: if task list has space, add task to task list, otherwise signals failure
+     * EFFECTS: if task list has space, add task to task list, otherwise prints message signalling failure
      * and does not add the latest task
      * */
-    public String addTask(Task task) {
+    public String addTaskPrintMessage(Task task) {
         if (numTasks() < MAX_NUM_TASKS) {
             taskList.add(task);
             return task.printTask() + " added successfully!";
         } else {
             return "Your Task List is currently full! Please delete a Task(s) and try again!";
+        }
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: if task list has space, add task to task list, otherwise does nothing
+     * */
+    public void addTask(Task task) {
+        if (numTasks() < MAX_NUM_TASKS) {
+            taskList.add(task);
         }
     }
 

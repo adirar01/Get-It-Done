@@ -1,5 +1,7 @@
 package ui;
 
+import model.User;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -15,9 +17,10 @@ public class LoginGUI extends JPanel {
     private static final String passwordText = "Password:";
     private static final String loginText = "Log in";
     private static final String quitText = "Quit Application";
-    private static final String adminUserName = "Gandalf";
-    private static final String adminPass = "Gandalf";
+    private User admin = new User("Gandalf", "Gandalf");
     private static final String titleText = "Get It Done!";
+    private static final String marioSoundPath = "./data/mario.wav";
+
     private static final Color background = new Color(203, 255, 191);
 
     private JLabel username;
@@ -132,22 +135,13 @@ public class LoginGUI extends JPanel {
         String givenUsername = usernameInput.getText();
         String givenPassword = String.valueOf(passwordInput.getPassword());
 
-        return givenUsername.equals(adminUserName) && givenPassword.equals(adminPass);
+        return givenUsername.equals(admin.getUsername()) && givenPassword.equals(admin.getPassword());
     }
 
     /*
      * EFFECTS: plays the mario.wav sound clip from data folder
      * */
     protected void playMarioSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        /*
-         * The following code is adapted from:
-         * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
-         * Audio source:
-         * https://www.youtube.com/watch?v=VH8mQRXemuo
-         *  */
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/mario.wav"));
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.start();
+        PlayMusic.playSound(marioSoundPath);
     }
 }

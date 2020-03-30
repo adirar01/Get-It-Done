@@ -5,13 +5,11 @@ import model.Task;
 import model.TaskList;
 import model.User;
 import persistence.Reader;
-import persistence.Writer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // Console UI for Get It Done application
@@ -128,7 +126,7 @@ public class ConsoleUI {
         Task newTask = null; // whenever a new task object is created, same name?
         try {
             newTask = new Task(taskName, dueDate);
-            System.out.println("\n" + taskList.addTask(newTask));
+            System.out.println("\n" + taskList.addTaskPrintMessage(newTask));
         } catch (EmptyStringException e) {
             System.out.println("Could not add task! Please ensure you specified the name and due date of the task!");
         }
@@ -193,26 +191,13 @@ public class ConsoleUI {
             System.out.println("No tasks to save! Please add a task to use this feature.");
         } else {
             try {
-                Writer writer = new Writer(new File(TASK_TRACKER_FILE));
-
-                ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
-
-                for (int count = 0; count < taskList.numTasks(); count++) {
-                    currentTaskList.add(taskList.getTask(count + 1));
-                }
-
-                for (Task task : currentTaskList) {
-                    writer.write(task); // writes each task to file on a new line
-                }
-
-                writer.close();
-
+                Save.saveTaskList(taskList, TASK_TRACKER_FILE);
                 System.out.println("Accounts saved to file " + TASK_TRACKER_FILE);
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to save data to " + TASK_TRACKER_FILE);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                // this is due to a programming error thing
+                // this is due to a programming error
             }
         }
     }

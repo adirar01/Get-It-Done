@@ -49,7 +49,7 @@ public class Reader {
             String readDueDate = lineComponents.get(1);
             try {
                 readTask = new Task(readTaskName, readDueDate);
-                readTaskList.addTask(readTask);
+                readTaskList.addTaskPrintMessage(readTask);
             } catch (EmptyStringException e) {
                 e.printStackTrace(); // should never need to happen
             }

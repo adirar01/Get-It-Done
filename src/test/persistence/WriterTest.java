@@ -5,7 +5,6 @@ import model.Task;
 import model.TaskList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sun.invoke.empty.Empty;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,9 +41,9 @@ public class WriterTest {
         }
 
         testTaskList = new TaskList();
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task2);
-        testTaskList.addTask(task3);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task2);
+        testTaskList.addTaskPrintMessage(task3);
     }
 
     @Test

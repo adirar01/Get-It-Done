@@ -31,23 +31,51 @@ public class TaskListTest {
     }
 
     @Test
-    public void testAddTaskSingle() {
+    public void testAddTaskPrintMessageSingle() {
         assertEquals(0, testTaskList.numTasks());
-        assertEquals(task1.printTask() + " added successfully!", testTaskList.addTask(task1));
+        assertEquals(task1.printTask() + " added successfully!", testTaskList.addTaskPrintMessage(task1));
         assertEquals(1, testTaskList.numTasks());
     }
 
     @Test
-    public void testAddTaskMultiple() {
+    public void testAddTaskPrintMessageMultiple() {
         assertEquals(0, testTaskList.numTasks());
-        assertEquals(task1.printTask() + " added successfully!", testTaskList.addTask(task1));
-        assertEquals(task2.printTask() + " added successfully!", testTaskList.addTask(task2));
-        assertEquals(task3.printTask() + " added successfully!", testTaskList.addTask(task3));
+        assertEquals(task1.printTask() + " added successfully!", testTaskList.addTaskPrintMessage(task1));
+        assertEquals(task2.printTask() + " added successfully!", testTaskList.addTaskPrintMessage(task2));
+        assertEquals(task3.printTask() + " added successfully!", testTaskList.addTaskPrintMessage(task3));
         assertEquals(3, testTaskList.numTasks());
     }
 
     @Test
-    public void testAddTaskUpperBound() {
+    public void testAddTaskPrintMessageUpperBound() {
+        assertEquals(0, testTaskList.numTasks());
+        for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
+            testTaskList.addTaskPrintMessage(task1);
+        }
+        assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
+    }
+
+    @Test
+    public void testAddTaskPrintMessageBeyondMaximum() {
+        for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
+            testTaskList.addTaskPrintMessage(task1);
+        }
+        assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
+
+        assertEquals("Your Task List is currently full! Please delete a Task(s) and try again!", testTaskList.addTaskPrintMessage(task2));
+
+        assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
+    }
+
+    @Test
+    public void testAddTaskSingle() {
+        assertEquals(0, testTaskList.numTasks());
+        testTaskList.addTask(task1);
+        assertEquals(1, testTaskList.numTasks());
+    }
+
+    @Test
+    public void testAddTaskMax() {
         assertEquals(0, testTaskList.numTasks());
         for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
             testTaskList.addTask(task1);
@@ -61,17 +89,13 @@ public class TaskListTest {
             testTaskList.addTask(task1);
         }
         assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
-
-        assertEquals("Your Task List is currently full! Please delete a Task(s) and try again!", testTaskList.addTask(task2));
-
-        assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
     }
 
     @Test
     public void testDeleteTaskSingle() {
         assertEquals(0, testTaskList.numTasks());
 
-        testTaskList.addTask(task1);
+        testTaskList.addTaskPrintMessage(task1);
         assertEquals(1, testTaskList.numTasks());
 
         testTaskList.deleteTask(1);
@@ -82,9 +106,9 @@ public class TaskListTest {
     public void testDeleteTaskMultiple() {
         assertEquals(0, testTaskList.numTasks());
 
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task1);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task1);
 
         assertEquals(3, testTaskList.numTasks());
 
@@ -105,30 +129,30 @@ public class TaskListTest {
 
     @Test
     public void testPrintTaskListSingle() {
-        testTaskList.addTask(task1);
+        testTaskList.addTaskPrintMessage(task1);
         assertEquals("\t\t\tTask List:\n\n" + "\n1. " + task1.printTask(), testTaskList.printTaskList());
     }
 
     @Test
     public void testPrintTaskListMultiple() {
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task2);
-        testTaskList.addTask(task3);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task2);
+        testTaskList.addTaskPrintMessage(task3);
         assertEquals("\t\t\tTask List:\n\n" + "\n1. " + task1.printTask() + "\n2. " + task2.printTask() + "\n3. " + task3.printTask(), testTaskList.printTaskList());
     }
 
     @Test
     public void testGetTaskSingle() {
-        testTaskList.addTask(task1);
+        testTaskList.addTaskPrintMessage(task1);
 
         assertEquals(task1, testTaskList.getTask(1));
     }
 
     @Test
     public void testGetTaskMultiple() {
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task2);
-        testTaskList.addTask(task3);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task2);
+        testTaskList.addTaskPrintMessage(task3);
 
         assertEquals(task3, testTaskList.getTask(3));
         assertEquals(task2, testTaskList.getTask(2));
@@ -137,15 +161,15 @@ public class TaskListTest {
 
     @Test
     public void testGetIndexOfSingle() {
-        testTaskList.addTask(task1);
+        testTaskList.addTaskPrintMessage(task1);
         assertEquals(0, testTaskList.getIndexOf(task1));
     }
 
     @Test
     public void testGetIndexOfMultiple() {
-        testTaskList.addTask(task1);
-        testTaskList.addTask(task2);
-        testTaskList.addTask(task3);
+        testTaskList.addTaskPrintMessage(task1);
+        testTaskList.addTaskPrintMessage(task2);
+        testTaskList.addTaskPrintMessage(task3);
 
         assertEquals(0, testTaskList.getIndexOf(task1));
         assertEquals(1, testTaskList.getIndexOf(task2));

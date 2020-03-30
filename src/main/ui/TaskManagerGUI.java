@@ -4,7 +4,6 @@ import exceptions.EmptyStringException;
 import model.Task;
 import model.TaskList;
 import persistence.Reader;
-import persistence.Writer;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -26,9 +25,9 @@ public class TaskManagerGUI extends JPanel {
      * Adapted from Oracle's list swing tutorials and
      * other provided class repositories
      * */
-    private DefaultListModel extractedTasks = new DefaultListModel();
+    protected DefaultListModel extractedTasks = new DefaultListModel();
 
-    private TaskList taskList; // remember you broke this
+    protected TaskList taskList; // remember you broke this
     protected JList<Task> tasks;
     protected static final String addTaskString = "Add Task";
     protected static final String deleteTaskString = "Delete Task";
@@ -38,7 +37,9 @@ public class TaskManagerGUI extends JPanel {
     protected static final String taskNameTitleString = "Task Name:";
     protected static final String dueDateTitleString = "Due Date:";
     protected static final String taskListTitleString = "Your Task List:";
-    private static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
+    protected static final String TASK_TRACKER_FILE = "./data/GandalfTaskTracker.txt";
+    protected static final String zeldaSoundPath = "./data/zelda.wav";
+
 
     protected JButton addTaskButton;
     protected JButton deleteTaskButton;
@@ -90,6 +91,7 @@ public class TaskManagerGUI extends JPanel {
         setVisible(true);
     }
 
+
     /*
      * EFFECTS: loads user task list from file if it exists; otherwise initializes a new task list.
      * */
@@ -105,7 +107,7 @@ public class TaskManagerGUI extends JPanel {
     /*
      * EFFECTS: updates the visual task list from the current TaskList object
      * */
-    private void updateVisualList() {
+    protected void updateVisualList() {
         extractedTasks.removeAllElements(); // start from nothing
         ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
 
@@ -265,7 +267,7 @@ public class TaskManagerGUI extends JPanel {
     /*
      * EFFECTS: produces dialog box error for a full task list
      * */
-    private void fullErrorDialogBox() {
+    protected void fullErrorDialogBox() {
         try {
             playZeldaSound();
         } catch (Exception e) {
@@ -314,7 +316,7 @@ public class TaskManagerGUI extends JPanel {
     /*
      * EFFECTS: formats the visual representation of a task in task list viewer from a task object
      * */
-    private StringBuilder printTaskInList(Task justAdded) {
+    protected StringBuilder printTaskInList(Task justAdded) {
         StringBuilder newTaskEntry = new StringBuilder();
         newTaskEntry.append(taskList.getIndexOf(justAdded) + 1).append(". ");
         newTaskEntry.append(taskNameTitleString).append(" ");
@@ -329,16 +331,7 @@ public class TaskManagerGUI extends JPanel {
      * EFFECTS: plays the zelda.wav sound clip from data folder
      * */
     private void playZeldaSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        /*
-         * The following code is adapted from:
-         * https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
-         * Audio source:
-         * https://www.youtube.com/watch?v=LqkRghWjD0Y
-         *  */
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/zelda.wav"));
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.start();
+        PlayMusic.playSound(zeldaSoundPath);
     }
 
     /*
@@ -459,19 +452,7 @@ public class TaskManagerGUI extends JPanel {
                 emptyTaskListError();
             } else {
                 try {
-                    Writer writer = new Writer(new File(TASK_TRACKER_FILE));
-
-                    ArrayList<Task> currentTaskList = new ArrayList<>(); // making a list of tasks from task list
-
-                    for (int count = 0; count < taskList.numTasks(); count++) {
-                        currentTaskList.add(taskList.getTask(count + 1));
-                    }
-
-                    for (Task task : currentTaskList) {
-                        writer.write(task); // writes each task to file on a new line
-                    }
-
-                    writer.close();
+                    Save.saveTaskList(taskList, TASK_TRACKER_FILE);
                     savedDialogBox();
                 } catch (FileNotFoundException e1) {
                     fileNotFoundDialogBox();

@@ -47,3 +47,7 @@ The task should appear in the scrollable task list panel. :computer:
 - This exception gets thrown whenever a user attempts to add a task with an unspecified (empty) name or due date or if they try to edit an already existing task without specifying the name of due date.
 - Note: I had to surround Task constructor calls in the Reader, TaskListTest, and WriterTest classes in order for the program to compile.
 - The exceptions are handled appropriately in both the ConsoleUI and TaskManagerGUI.
+
+## Phase 4: Task 3
+- Previously I was playing two audio clips in the GUI program upon different events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling in the program.
+- Part of the save task list functionality in both the console UI and GUI programs were very similar to each other, so I abstracted the similar part into a static method called saveTaskList in a new Save class to help reduce coupling. 
