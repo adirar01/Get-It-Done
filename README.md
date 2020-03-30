@@ -36,7 +36,14 @@ The task should appear in the scrollable task list panel. :computer:
 - If you try to do something invalid (like add a task without text, edit/ delete a task without selecting a task, etc) you should trigger another audio component (and at times a dialogue box) signalling error :warning: 
 - You should only be able to add 10 tasks to the task list at a time. If you try adding an 11th for example, you should get a dialog box error. :weary:
 
-## Image/ Audio Sources ::
+## Image/ Audio Sources
 - The Zelda "treasure found" sound effect obtained from: https://www.youtube.com/watch?v=LqkRghWjD0Y
 - The Mario theme music sound effect obtained from: https://www.youtube.com/watch?v=VH8mQRXemuo
 - Check mark image used as logo obtained from: https://www.iconfinder.com/icons/1398912/check_circle_correct_mark_success_tick_yes_icon
+
+## Phase 4: Task 2
+- I chose to make my Task class (in the model package) robust 
+- I made the Task constructor as well as the setTaskName and setDueDate methods throw the EmptyStringException that I added to the exceptions package. 
+- This exception gets thrown whenever a user attempts to add a task with an unspecified (empty) name or due date or if they try to edit an already existing task without specifying the name of due date.
+- Note: I had to surround Task constructor calls in the Reader, TaskListTest, and WriterTest classes in order for the program to compile.
+- The exceptions are handled appropriately in both the ConsoleUI and TaskManagerGUI.

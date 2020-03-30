@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.EmptyStringException;
 import model.Task;
 import model.TaskList;
 import model.User;
@@ -124,8 +125,13 @@ public class ConsoleUI {
         System.out.println("\nPlease enter task due date (MM/DD/YY):");
         String dueDate = input.nextLine();
 
-        Task newTask = new Task(taskName, dueDate); // whenever a new task object is created, same name?
-        System.out.println("\n" + taskList.addTask(newTask));
+        Task newTask = null; // whenever a new task object is created, same name?
+        try {
+            newTask = new Task(taskName, dueDate);
+            System.out.println("\n" + taskList.addTask(newTask));
+        } catch (EmptyStringException e) {
+            System.out.println("Could not add task! Please ensure you specified the name and due date of the task!");
+        }
     }
 
     // MODIFIES: this
@@ -169,11 +175,14 @@ public class ConsoleUI {
             System.out.println("What is this task's new due date?");
             String rescheduledDueDate = input.nextLine();
 
-            taskList.getTask(index).setTaskName(renamedTask);
-            taskList.getTask(index).setDueDate(rescheduledDueDate);
-
-            System.out.println("\n\nThis task has been changed to:");
-            System.out.println("\n" + taskList.getTask(index).printTask());
+            try {
+                taskList.getTask(index).setTaskName(renamedTask);
+                taskList.getTask(index).setDueDate(rescheduledDueDate);
+                System.out.println("\n\nThis task has been changed to:");
+                System.out.println("\n" + taskList.getTask(index).printTask());
+            } catch (EmptyStringException e) {
+                System.out.println("Could not edit task! Please ensure you specified the task completely!");
+            }
         }
     }
 

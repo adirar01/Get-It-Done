@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.EmptyStringException;
 import model.Task;
 import model.TaskList;
 
@@ -46,9 +47,14 @@ public class Reader {
             ArrayList<String> lineComponents = splitString(line);
             String readTaskName = lineComponents.get(0);
             String readDueDate = lineComponents.get(1);
-            readTask = new Task(readTaskName, readDueDate);
+            try {
+                readTask = new Task(readTaskName, readDueDate);
+                readTaskList.addTask(readTask);
+            } catch (EmptyStringException e) {
+                e.printStackTrace(); // should never need to happen
+            }
 
-            readTaskList.addTask(readTask);
+
         }
 
         return readTaskList;

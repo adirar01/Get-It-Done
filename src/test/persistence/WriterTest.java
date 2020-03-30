@@ -1,9 +1,11 @@
 package persistence;
 
+import exceptions.EmptyStringException;
 import model.Task;
 import model.TaskList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sun.invoke.empty.Empty;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,9 +33,13 @@ public class WriterTest {
     public void setUp() throws FileNotFoundException, UnsupportedEncodingException {
         testWriter = new Writer(new File(TEST_FILE));
 
-        task1 = new Task("save middle earth", "02/20/20");
-        task2 = new Task("visit bilbo at the shire", "04/15/20");
-        task3 = new Task("restock closet with white majestic gowns", "03/17/20");
+        try {
+            task1 = new Task("save middle earth", "02/20/20");
+            task2 = new Task("visit bilbo at the shire", "04/15/20");
+            task3 = new Task("restock closet with white majestic gowns", "03/17/20");
+        } catch (EmptyStringException e) {
+            fail(); // necessary for compilation, should not happen
+        }
 
         testTaskList = new TaskList();
         testTaskList.addTask(task1);

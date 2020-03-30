@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.EmptyStringException;
 import model.Task;
 import model.TaskList;
 import persistence.Reader;
@@ -354,9 +355,7 @@ public class TaskManagerGUI extends JPanel {
          * */
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (taskName.getText().equals("") || dueDate.getText().equals("")) {
-                emptyErrorDialogBox();
-            } else if (taskList.numTasks() >= TaskList.MAX_NUM_TASKS) {
+            if (taskList.numTasks() >= TaskList.MAX_NUM_TASKS) {
                 fullErrorDialogBox();
             } else {
                 createAndAddNewTask();
@@ -371,16 +370,19 @@ public class TaskManagerGUI extends JPanel {
         private void createAndAddNewTask() {
             String taskNameString = taskName.getText();
             String dueDateString = dueDate.getText();
-            Task createdTask = new Task(taskNameString, dueDateString);
+            try {
+                Task createdTask = null;
+                createdTask = new Task(taskNameString, dueDateString);
 
-            // add a task the task list
-            taskList.addTask(createdTask);
+                // add a task the task list
+                taskList.addTask(createdTask);
+                Task justAdded = taskList.getTask(taskList.numTasks());
+                StringBuilder newTaskEntry = printTaskInList(justAdded);
 
-            Task justAdded = taskList.getTask(taskList.numTasks());
-
-            StringBuilder newTaskEntry = printTaskInList(justAdded);
-
-            extractedTasks.addElement(newTaskEntry);
+                extractedTasks.addElement(newTaskEntry);
+            } catch (EmptyStringException e) {
+                emptyErrorDialogBox();
+            }
         }
     }
 
@@ -427,18 +429,19 @@ public class TaskManagerGUI extends JPanel {
                 } catch (Exception e1) {
                     Toolkit.getDefaultToolkit().beep();
                 }
-            } else if (taskNameString.equals("") || dueDateString.equals("")) {
-                emptyErrorDialogBox();
             } else {
                 Task taskToEdit = taskList.getTask(selectedIndex + 1);
-                taskToEdit.setTaskName(taskNameString);
-                taskToEdit.setDueDate(dueDateString);
+                try {
+                    taskToEdit.setTaskName(taskNameString);
+                    taskToEdit.setDueDate(dueDateString);
 
-                StringBuilder editedTaskEntry = printTaskInList(taskToEdit);
+                    StringBuilder editedTaskEntry = printTaskInList(taskToEdit);
+                    extractedTasks.set(selectedIndex, editedTaskEntry);
 
-                extractedTasks.set(selectedIndex, editedTaskEntry);
-
-                resetTextFields();
+                    resetTextFields();
+                } catch (EmptyStringException ex) {
+                    emptyErrorDialogBox();
+                }
             }
         }
     }

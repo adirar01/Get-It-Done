@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.EmptyStringException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,13 @@ public class TaskListTest {
     @BeforeEach
     public void setUp() {
         testTaskList = new TaskList();
-        task1 = new Task("task1", "01/20/20");
-        task2 = new Task("task2", "02/20/20");
-        task3 = new Task("task3", "03/20/20");
+        try {
+            task1 = new Task("task1", "01/20/20");
+            task2 = new Task("task2", "02/20/20");
+            task3 = new Task("task3", "03/20/20");
+        } catch (EmptyStringException e) {
+            fail(); // should not happen, necessary for compilation
+        }
     }
 
     @Test
