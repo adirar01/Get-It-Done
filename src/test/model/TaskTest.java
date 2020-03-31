@@ -32,7 +32,7 @@ public class TaskTest {
     @Test
     public void setUpExceptionThrownNameEmpty() {
         try {
-            testTask = new Task("", "");
+            testTask = new Task("", "2020");
             fail();
         } catch (EmptyStringException e) {
             //expected
@@ -42,7 +42,7 @@ public class TaskTest {
     @Test
     public void setUpExceptionThrownDateEmpty() {
         try {
-            testTask = new Task("", "");
+            testTask = new Task("sample task", "");
             fail();
         } catch (EmptyStringException e) {
             //expected

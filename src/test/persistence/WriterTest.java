@@ -77,7 +77,8 @@ public class WriterTest {
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
+        } catch (EmptyStringException ex) {
+            fail();
         }
     }
-
 }

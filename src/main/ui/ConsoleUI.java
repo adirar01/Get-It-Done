@@ -220,7 +220,7 @@ public class ConsoleUI {
             defaultUser = new User("Gandalf", "Treebeard");
             input = new Scanner(System.in);
             taskList = Reader.readTaskList(new File(TASK_TRACKER_FILE));
-        } catch (IOException e) {
+        } catch (IOException | EmptyStringException ex) {
             initialize();
         }
     }

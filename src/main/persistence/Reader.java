@@ -24,7 +24,7 @@ public class Reader {
 
     // EFFECTS: returns the task list parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
-    public static TaskList readTaskList(File file) throws IOException {
+    public static TaskList readTaskList(File file) throws IOException, EmptyStringException {
         List<String> fileContent = readFile(file);
         return parseContent(fileContent);
     }
@@ -37,7 +37,7 @@ public class Reader {
 
     // EFFECTS: returns a TaskList parsed from list of strings
     // where each string contains data for a single task
-    private static TaskList parseContent(List<String> fileContent) {
+    private static TaskList parseContent(List<String> fileContent) throws EmptyStringException {
         TaskList readTaskList = new TaskList();
 
         Task readTask;
@@ -47,12 +47,8 @@ public class Reader {
             ArrayList<String> lineComponents = splitString(line);
             String readTaskName = lineComponents.get(0);
             String readDueDate = lineComponents.get(1);
-            try {
-                readTask = new Task(readTaskName, readDueDate);
-                readTaskList.addTaskPrintMessage(readTask);
-            } catch (EmptyStringException e) {
-                e.printStackTrace(); // should never need to happen
-            }
+            readTask = new Task(readTaskName, readDueDate);
+            readTaskList.addTaskPrintMessage(readTask);
 
 
         }

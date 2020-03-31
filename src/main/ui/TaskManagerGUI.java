@@ -99,7 +99,7 @@ public class TaskManagerGUI extends JPanel {
         try {
             taskList = Reader.readTaskList(new File(TASK_TRACKER_FILE));
             updateVisualList();
-        } catch (IOException e) {
+        } catch (IOException | EmptyStringException e) {
             taskList = new TaskList();
         }
     }

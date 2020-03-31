@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.EmptyStringException;
 import model.TaskList;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,8 @@ public class ReaderTest {
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
+        } catch (EmptyStringException ex) {
+            fail();
         }
     }
 
@@ -60,6 +63,8 @@ public class ReaderTest {
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
+        } catch (EmptyStringException ex) {
+            fail();
         }
     }
 
@@ -70,6 +75,8 @@ public class ReaderTest {
             fail("Not expecting to reach here");
         } catch (IOException e) {
             // expected
+        } catch (EmptyStringException ex) {
+            fail();
         }
     }
 
