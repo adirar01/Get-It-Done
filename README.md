@@ -45,9 +45,9 @@ The task should appear in the scrollable task list panel. :computer:
 - I chose to make my Task class (in the model package) robust 
 - I made the Task constructor as well as the setTaskName and setDueDate methods throw the EmptyStringException that I added to the exceptions package. 
 - This exception gets thrown whenever a user attempts to add a task with an unspecified (empty) name or due date or if they try to edit an already existing task without specifying the name of due date.
-- Note: I had to surround Task constructor calls in the Reader, TaskListTest, and WriterTest classes in order for the program to compile.
+- Note: I had to either throw the exception or surround all Task constructor calls with try-catch blocks in order for the program to compile.
 - The exceptions are handled appropriately in both the ConsoleUI and TaskManagerGUI.
 
 ## Phase 4: Task 3
-- Previously I was playing two audio clips in the GUI program upon different events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling and increase cohesion in the program.
+- I have two audio clips in the GUI program that play upon triggering of certain events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling and increase cohesion in the program.
 - Part of the save task list functionality in both the console UI and GUI programs were very similar to each other, so I abstracted the similar part into a static method called saveTaskList in a new Save class. I've also improved the implementation by allowing TaskList to implement iterable and iterate over the Tasks of a TaskList object in order save them. These changes improve the readability of the code while also increasing cohesion and reducing coupling.
