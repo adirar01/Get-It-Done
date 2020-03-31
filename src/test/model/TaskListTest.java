@@ -177,6 +177,24 @@ public class TaskListTest {
         assertEquals(1, testTaskList.getIndexOf(task2));
         assertEquals(2, testTaskList.getIndexOf(task3));
     }
+
+    @Test
+    public void testIterator() {
+        testTaskList.addTask(task1);
+        testTaskList.addTask(task2);
+        testTaskList.addTask(task3);
+
+        for (Task task : testTaskList) {
+            try {
+                task.setTaskName("CHANGED");
+            } catch (EmptyStringException e) {
+                fail();
+            }
+        }
+        assertEquals(testTaskList.getTask(1).getTaskName(), "CHANGED");
+        assertEquals(testTaskList.getTask(2).getTaskName(), "CHANGED");
+        assertEquals(testTaskList.getTask(3).getTaskName(), "CHANGED");
+    }
 }
 
 
