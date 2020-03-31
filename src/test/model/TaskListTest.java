@@ -88,6 +88,8 @@ public class TaskListTest {
         for (int count = 0; count < TaskList.MAX_NUM_TASKS; count++) {
             testTaskList.addTask(task1);
         }
+
+        testTaskList.addTask(task1);
         assertEquals(TaskList.MAX_NUM_TASKS, testTaskList.numTasks());
     }
 

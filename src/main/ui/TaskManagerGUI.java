@@ -351,7 +351,7 @@ public class TaskManagerGUI extends JPanel {
      * */
 
     // ActionListener for adding task to task list functionality
-    class AddTaskListener implements ActionListener {
+    private class AddTaskListener implements ActionListener {
         /*
          * EFFECTS: adds user inputted task to application task list if both text fields are not empty
          * otherwise, signals empty error. If task list is full, signals full error.
@@ -390,7 +390,7 @@ public class TaskManagerGUI extends JPanel {
     }
 
     // ActionListener for deleting task from task list functionality
-    public class DeleteTaskListener implements ActionListener {
+    private class DeleteTaskListener implements ActionListener {
 
         /*
          * EFFECTS: deletes a task from the task list if it exists, otherwise signals error
@@ -414,7 +414,7 @@ public class TaskManagerGUI extends JPanel {
     }
 
     // ActionListener for editing task in task list functionality
-    public class EditTaskListener implements ActionListener {
+    private class EditTaskListener implements ActionListener {
 
         /*
          * EFFECTS: edits selected task with input specified in text fields if text fields are not empty;
@@ -452,7 +452,7 @@ public class TaskManagerGUI extends JPanel {
     }
 
     // ActionListener for saving task list to file functionality
-    public class SaveTaskListListener implements ActionListener {
+    private class SaveTaskListListener implements ActionListener {
 
         /*
          * EFFECTS: saves current task list to file, otherwise signals error

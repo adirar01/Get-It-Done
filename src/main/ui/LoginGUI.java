@@ -50,7 +50,6 @@ public class LoginGUI extends JPanel {
         add(this.title);
         add(this.loginMenu);
         setVisible(true);
-
     }
 
     /*
