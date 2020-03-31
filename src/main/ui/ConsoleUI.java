@@ -36,8 +36,6 @@ public class ConsoleUI {
     public void runGetItDone() {
         appStatus = true;
         homeStatus = true;
-        String command = null;
-
         loadTaskTracker();
 
         while (appStatus) {
@@ -45,9 +43,8 @@ public class ConsoleUI {
             if (!appStatus) {
                 break;
             }
-
             displayMenu();
-            command = input.next();
+            String command = input.next();
             input.nextLine(); // added to prevent line skipping for doAddTask
             if (command.equals("6")) {
                 appStatus = false;
@@ -148,9 +145,13 @@ public class ConsoleUI {
             System.out.println("\nPlease select the number of the task you would like to delete:");
 
             int index = input.nextInt();
-            taskList.deleteTask(index);
-            System.out.println("\nYour updated Task Tracker is printed below:");
-            System.out.println("\n" + taskList.printTaskList());
+            if (index <= taskList.numTasks()) {
+                taskList.deleteTask(index);
+                System.out.println("\nYour updated Task Tracker is printed below:");
+                System.out.println("\n" + taskList.printTaskList());
+            } else {
+                System.out.println("Please select a valid task.");
+            }
         }
     }
 
@@ -164,23 +165,32 @@ public class ConsoleUI {
             System.out.println("\n\nPlease select the number of the task you would like to edit:");
 
             int index = input.nextInt();
-            taskList.getTask(index);
 
-            System.out.println("What would you like to rename this task?");
-            input.nextLine(); // is there a way around this to stop it from skipping?
-            String renamedTask = input.nextLine();
+            if (index <= taskList.numTasks()) {
+                taskList.getTask(index);
 
-            System.out.println("What is this task's new due date?");
-            String rescheduledDueDate = input.nextLine();
+                System.out.println("What would you like to rename this task?");
+                input.nextLine(); // is there a way around this to stop it from skipping?
+                String renamedTask = input.nextLine();
 
-            try {
-                taskList.getTask(index).setTaskName(renamedTask);
-                taskList.getTask(index).setDueDate(rescheduledDueDate);
-                System.out.println("\n\nThis task has been changed to:");
-                System.out.println("\n" + taskList.getTask(index).printTask());
-            } catch (EmptyStringException e) {
-                System.out.println("Could not edit task! Please ensure you specified the task completely!");
+                System.out.println("What is this task's new due date?");
+                String rescheduledDueDate = input.nextLine();
+
+                robustEditTask(index, renamedTask, rescheduledDueDate);
+            } else {
+                System.out.println("Please select a valid task.");
             }
+        }
+    }
+
+    private void robustEditTask(int index, String renamedTask, String rescheduledDueDate) {
+        try {
+            taskList.getTask(index).setTaskName(renamedTask);
+            taskList.getTask(index).setDueDate(rescheduledDueDate);
+            System.out.println("\n\nThis task has been changed to:");
+            System.out.println("\n" + taskList.getTask(index).printTask());
+        } catch (EmptyStringException e) {
+            System.out.println("Could not edit task! Please ensure you specified the task completely!");
         }
     }
 

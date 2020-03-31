@@ -25,10 +25,10 @@
     </module>-->
 
     <module name="TreeWalker">
-        <module name="LineLength">
-            <property name="max" value="120"/>
-            <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
-        </module>
+		 <module name="LineLength">
+			<property name="max" value="120"/>
+			<property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+		</module>
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">
             <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
@@ -72,7 +72,7 @@
         <module name="ArrayTypeStyle"/>
         <!--
         <module name="MissingSwitchDefault"/>
-        <module name="FallThrough"/>-->
+        <module name="FallThrough"/> -->
         <module name="UpperEll"/>
         <module name="ModifierOrder"/>
         <module name="EmptyLineSeparator">
@@ -207,9 +207,12 @@
             <property name="exceptionVariableName" value="expected"/>
         </module>
         <module name="MethodLength">
-            <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
-            <property name="max" value="25"/>
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="20"/>
             <property name="countEmpty" value="false"/>
+        </module>
+        <module name="IllegalImport">
+            <property name="illegalPkgs" value="com.sun" />
         </module>
     </module>
 </module>

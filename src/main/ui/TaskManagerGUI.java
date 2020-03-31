@@ -131,18 +131,20 @@ public class TaskManagerGUI extends JPanel {
         this.topTitle = new JLabel(titleText);
         Font font = new Font("Century Gothic", Font.BOLD, 55);
         this.topTitle.setFont(font);
+        placeTitleElements();
+    }
+
+    private void placeTitleElements() {
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;
         c.gridheight = 2;
         title.add(topTitle, c);
         c.gridy = 1;
-
         try {
             drawIcon();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         c.gridy = 3;
         c.gridheight = 1;
         title.add(imageLabel, c);
@@ -164,6 +166,10 @@ public class TaskManagerGUI extends JPanel {
         initializeBuildTaskSpecificationFields();
         taskSpecification.setBackground(background1);
 
+        placeTaskSpecElements();
+    }
+
+    private void placeTaskSpecElements() {
         GridBagConstraints c = new GridBagConstraints();
 
         c.gridx = 0;
@@ -229,12 +235,7 @@ public class TaskManagerGUI extends JPanel {
      * EFFECTS: initializes and places edit, delete, and save buttons in interactionButtons panel
      * */
     private void buildInteractionButtons() {
-        this.interactionButtons = new JPanel();
-        interactionButtons.setBackground(background1);
-        this.interactionButtons.setLayout(new GridBagLayout());
-        this.deleteTaskButton = new JButton(deleteTaskString);
-        this.editTaskButton = new JButton(editTaskString);
-        this.saveTaskListButton = new JButton(saveTaskListString);
+        initializeInteractionFields();
         Font font = new Font("Century Schoolbook", Font.ITALIC, 15);
         this.deleteTaskButton.setFont(font);
         this.editTaskButton.setFont(font);
@@ -254,6 +255,15 @@ public class TaskManagerGUI extends JPanel {
         c.gridy = 1;
         c.gridwidth = 2;
         this.interactionButtons.add(saveTaskListButton, c);
+    }
+
+    private void initializeInteractionFields() {
+        this.interactionButtons = new JPanel();
+        interactionButtons.setBackground(background1);
+        this.interactionButtons.setLayout(new GridBagLayout());
+        this.deleteTaskButton = new JButton(deleteTaskString);
+        this.editTaskButton = new JButton(editTaskString);
+        this.saveTaskListButton = new JButton(saveTaskListString);
     }
 
     /*
@@ -423,18 +433,20 @@ public class TaskManagerGUI extends JPanel {
                     Toolkit.getDefaultToolkit().beep();
                 }
             } else {
-                Task taskToEdit = taskList.getTask(selectedIndex + 1);
-                try {
-                    taskToEdit.setTaskName(taskNameString);
-                    taskToEdit.setDueDate(dueDateString);
+                robustEditTask(selectedIndex, taskNameString, dueDateString);
+            }
+        }
 
-                    StringBuilder editedTaskEntry = printTaskInList(taskToEdit);
-                    extractedTasks.set(selectedIndex, editedTaskEntry);
-
-                    resetTextFields();
-                } catch (EmptyStringException ex) {
-                    emptyErrorDialogBox();
-                }
+        private void robustEditTask(int selectedIndex, String taskNameString, String dueDateString) {
+            Task taskToEdit = taskList.getTask(selectedIndex + 1);
+            try {
+                taskToEdit.setTaskName(taskNameString);
+                taskToEdit.setDueDate(dueDateString);
+                StringBuilder editedTaskEntry = printTaskInList(taskToEdit);
+                extractedTasks.set(selectedIndex, editedTaskEntry);
+                resetTextFields();
+            } catch (EmptyStringException ex) {
+                emptyErrorDialogBox();
             }
         }
     }

@@ -1,9 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 // Represents a task list with pending tasks to complete
-public class TaskList {
+public class TaskList implements Iterable<Task> {
     private ArrayList<Task> taskList;
     public static final int MAX_NUM_TASKS = 10;
 
@@ -86,5 +87,9 @@ public class TaskList {
         return taskList.get(i - 1);
     }
 
+    @Override
+    public Iterator<Task> iterator() {
+        return taskList.iterator();
+    }
 }
 
