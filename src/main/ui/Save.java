@@ -1,4 +1,4 @@
-package persistence;
+package ui;
 
 import model.Task;
 import model.TaskList;
@@ -12,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 public class Save {
 
     // EFFECTS: saves given task list to file given a file path
-    public static void saveTaskList(TaskList taskList, String writePath)
+    static void saveTaskList(TaskList taskList, String writePath)
             throws FileNotFoundException, UnsupportedEncodingException {
         Writer writer = new Writer(new File(writePath));
 
