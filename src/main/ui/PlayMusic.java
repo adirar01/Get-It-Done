@@ -4,10 +4,11 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+// Plays a given
 public class PlayMusic {
 
     /*
-     * EFFECTS: plays the zelda.wav sound clip from data folder
+     * EFFECTS: plays a given audio clip.wav file given the path
      * */
     static void playSound(String s) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         /*

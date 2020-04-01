@@ -134,6 +134,7 @@ public class TaskManagerGUI extends JPanel {
         placeTitleElements();
     }
 
+    // EFFECTS: lays out elements required for task specification on the appropriate panel
     private void placeTitleElements() {
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = 0;
@@ -169,6 +170,7 @@ public class TaskManagerGUI extends JPanel {
         placeTaskSpecElements();
     }
 
+    // EFFECTS: lays out elements required for task specification on the appropriate panel
     private void placeTaskSpecElements() {
         GridBagConstraints c = new GridBagConstraints();
 
@@ -257,6 +259,7 @@ public class TaskManagerGUI extends JPanel {
         this.interactionButtons.add(saveTaskListButton, c);
     }
 
+    // EFFECTS: initializes fields required for the interaction panel
     private void initializeInteractionFields() {
         this.interactionButtons = new JPanel();
         interactionButtons.setBackground(background1);
@@ -437,6 +440,7 @@ public class TaskManagerGUI extends JPanel {
             }
         }
 
+        // EFFECTS: edits and overwrites given task at index with a new name and due date
         private void robustEditTask(int selectedIndex, String taskNameString, String dueDateString) {
             Task taskToEdit = taskList.getTask(selectedIndex + 1);
             try {

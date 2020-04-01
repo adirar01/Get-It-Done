@@ -87,6 +87,7 @@ public class TaskList implements Iterable<Task> {
         return taskList.get(i - 1);
     }
 
+    // EFFECTS: returns taskList iterator
     @Override
     public Iterator<Task> iterator() {
         return taskList.iterator();

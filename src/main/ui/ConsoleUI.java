@@ -183,6 +183,7 @@ public class ConsoleUI {
         }
     }
 
+    // EFFECTS: edits and overwrites given task at index with a new name and due date
     private void robustEditTask(int index, String renamedTask, String rescheduledDueDate) {
         try {
             taskList.getTask(index).setTaskName(renamedTask);
