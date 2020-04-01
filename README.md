@@ -27,8 +27,7 @@ Productivity Manager Features:
 ## Instructions for Grader
 - You can generate the first required event (logging in) by running main and inputting the string "Gandalf"  (with the capital "G") into both the username and password text fields and clicking on the login button :squirrel:
 - Upon successful login, you should trigger my audio component (the mario theme song) :notes:
-- You can generate the second required event by typing a task name and due date (both strings) into the appropriate fields and clicking on add task.
-The task should appear in the scrollable task list panel. :computer:	
+- You can generate the second required event by typing a task name and due date (both strings) into the appropriate fields and clicking on add task. The task should appear in the scrollable task list panel. :computer:	
 - You can save the state of the task list by clicking on the save button at the bottom of the page. It should save to a file in the data folder. :floppy_disk:
 - You can reload the state of the application by exiting, rerunning main, and logging in again. If you've previously saved the task list it should appear in the same state it was saved in upon relaunching the application. :file_folder:
 - You can also edit a task in the task list by selecting a task, typing what you want the edited task to look in the appropriate text fields, and clicking on edit. The task should change in the task list panel below. :black_nib:
@@ -49,5 +48,5 @@ The task should appear in the scrollable task list panel. :computer:
 - The exceptions are handled appropriately in both the ConsoleUI and TaskManagerGUI.
 
 ## Phase 4: Task 3
-- I have two audio clips in the GUI program that play upon triggering of certain events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling and increase cohesion in the program.
-- Part of the save task list functionality in both the console UI and GUI programs were very similar to each other, so I abstracted the similar part into a static method called saveTaskList in a new Save class. I've also improved the implementation by allowing TaskList to implement iterable and iterate over the Tasks of a TaskList object in order save them. These changes improve the readability of the code while also increasing cohesion and reducing coupling.
+- I have two audio clips in the GUI program that play upon triggering of certain events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic in the ui package with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling and increase cohesion in the program.
+- Part of the save task list functionality in both the console UI and GUI programs were very similar to each other, so I abstracted the similar part into a static method called saveTaskList in a new Save class in the persistence package. I've also improved the implementation by allowing TaskList to implement iterable and iterate over the Tasks of a TaskList object in order save them. These changes improve the readability of the code while also increasing cohesion and reducing coupling.
