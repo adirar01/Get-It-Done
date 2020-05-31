@@ -50,3 +50,13 @@ Productivity Manager Features:
 ## Phase 4: Task 3
 - I have two audio clips in the GUI program that play upon triggering of certain events. The code for playing these two separate files were essentially the same minus the path of the file, so I created a new class called PlayMusic in the ui package with a static method called playSound that takes a string of the audio clip's path. This helps reduce the coupling and increase cohesion in the program.
 - Part of the save task list functionality in both the console UI and GUI programs were very similar to each other, so I abstracted the similar part into a static method called saveTaskList in a new Save class in the ui package. I've also improved the implementation by allowing TaskList to implement iterable and iterate over the Tasks of a TaskList object in order save them. These changes improve the readability of the code while also increasing cohesion and reducing coupling.
+
+## Screenshots
+
+### Log in page
+
+<img src = "screenshots/img_1.png" width = 350>
+
+### Task manager page
+
+<img src = "screenshots/img_2.png" width = 350>
