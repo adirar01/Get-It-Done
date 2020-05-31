@@ -53,10 +53,10 @@ Productivity Manager Features:
 
 ## Screenshots
 
-### Log in page
+### Log In page
 
 <img src = "screenshots/img_1.png" width = 350>
 
-### Task manager page
+### Task Manager page
 
 <img src = "screenshots/img_2.png" width = 350>
